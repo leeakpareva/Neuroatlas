@@ -1,0 +1,12 @@
+{
+  "Superior lobe of right lung": { "name": "Right Upper Lobe", "system": "Right lung", "color": "#3b82f6", "function": "The top lobe of the right lung. Air arrives via the right main bronchus; here oxygen crosses into the blood and carbon dioxide crosses out across millions of tiny alveoli. The right lung has three lobes — one more than the left, which gives up space for the heart." },
+  "Middle lobe of right lung": { "name": "Right Middle Lobe", "system": "Right lung", "color": "#2563eb", "function": "A small wedge-shaped lobe unique to the right lung, sitting between the upper and lower lobes. A common site for infection because its bronchus is narrow and drains poorly." },
+  "Inferior lobe of right lung": { "name": "Right Lower Lobe", "system": "Right lung", "color": "#1d4ed8", "function": "The largest lobe of the right lung, doing much of the gas-exchange work. It expands most during a deep breath as the diaphragm pulls down beneath it." },
+
+  "Superior lobe of left lung": { "name": "Left Upper Lobe", "system": "Left lung", "color": "#f87171", "function": "The upper lobe of the left lung. Its lower tongue-shaped tip, the lingula, is the left lung's answer to the missing middle lobe. Sits just in front of the heart." },
+  "Inferior lobe of left lung": { "name": "Left Lower Lobe", "system": "Left lung", "color": "#dc2626", "function": "The lower lobe of the left lung. Like its right-side twin it handles a large share of oxygen uptake and inflates most strongly on a deep inhalation." },
+
+  "Trachea": { "name": "Trachea & Bronchi", "system": "Airway", "color": "#f5c518", "function": "The windpipe. This cartilage-ringed tube carries air from the larynx down to the carina, where it splits into the left and right main bronchi feeding each lung. Cilia lining it sweep dust and mucus back up to be cleared." },
+
+  "Diaphragm": { "name": "Diaphragm", "system": "Respiratory muscle", "color": "#34d399", "function": "The dome-shaped muscle beneath the lungs and the main engine of breathing. When it contracts it flattens and pulls down, dropping the pressure in the chest so air rushes in; when it relaxes it springs back up and pushes air out." }
+}

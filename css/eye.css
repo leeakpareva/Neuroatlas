@@ -1,0 +1,50 @@
+/* NAVADA OptosAtlas — eye theme.
+   Loads after style.css and re-tints the cyan brain palette to a violet.
+   Most of the UI reads var(--accent); the rules below also cover the few
+   spots that hard-coded the cyan value. */
+
+body.eye {
+    --accent: #a78bfa;
+    --errp:   #f5a829;
+    --bg:     #0a0810;
+}
+
+body.eye #viewer-container {
+    background: radial-gradient(circle at 60% 40%, #181030 0%, #0a0810 70%);
+}
+
+body.eye .nav-tab.active {
+    background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(167,139,250,.03));
+}
+body.eye .list-item.active {
+    background: rgba(167,139,250,.14);
+    box-shadow: inset 0 0 0 1px rgba(167,139,250,.42);
+}
+body.eye .scn-btn:hover { box-shadow: 0 8px 22px -12px rgba(167,139,250,.6); }
+body.eye .scn-btn.active {
+    background: linear-gradient(90deg, rgba(167,139,250,.16), rgba(167,139,250,.03));
+}
+body.eye .scn-desc { border-left-color: rgba(167,139,250,.45); }
+body.eye .act-btn:hover { box-shadow: 0 8px 20px -12px rgba(167,139,250,.6); }
+body.eye .act-btn.active {
+    background: linear-gradient(135deg, rgba(167,139,250,.16), rgba(167,139,250,.02));
+    box-shadow: inset 0 0 0 1px rgba(167,139,250,.3);
+}
+body.eye .btn:hover {
+    box-shadow: 0 0 0 1px rgba(167,139,250,.25), 0 6px 18px -8px rgba(167,139,250,.5);
+}
+
+body.eye .msg.user { background: rgba(167,139,250,.12); border-color: rgba(167,139,250,.3); }
+body.eye .btn-send { background: linear-gradient(135deg, #c4b5fd, #8b5cf6); color: #1b1030; }
+body.eye .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(167,139,250,.8); }
+
+body.eye #leader-line { filter: drop-shadow(0 0 4px rgba(167,139,250,.45)); }
+
+body.eye #mobile-agent {
+    background: linear-gradient(135deg, #c4b5fd, #8b5cf6); color: #1b1030;
+    box-shadow: 0 8px 22px -6px rgba(167,139,250,.7);
+}
+body.eye #mobile-rotate.active {
+    background: linear-gradient(135deg, #c4b5fd, #8b5cf6); color: #1b1030;
+    box-shadow: 0 8px 22px -6px rgba(167,139,250,.7);
+}

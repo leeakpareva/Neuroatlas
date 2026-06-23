@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NAVADA GlucoAtlas — Interactive Metabolism</title>
+
+    <meta name="theme-color" content="#0c0610">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GlucoAtlas">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gluco.css">
+</head>
+<body class="gluco">
+    <header id="topbar">
+        <div class="brand-wrap">
+            <div class="brand">
+                <span class="brand-mark">NAVADA</span>
+                <span class="brand-sub">NeuroAtlas</span>
+            </div>
+            <nav class="organ-switch">
+                <a href="index.html" title="Brain atlas">🧠 Brain</a>
+                <a href="heart.html" title="Heart atlas">🫀 Heart</a>
+                <a href="lungs.html" title="Lungs atlas">🫁 Lungs</a>
+                <a href="eye.html" title="Eye atlas">👁️ Eye</a>
+                <a href="ear.html" title="Ear atlas">👂 Ear</a>
+                <a href="gluco.html" class="active" title="Glucose / metabolism atlas">🍔 Gluco</a>
+                <a href="gut.html" title="Gut / large intestine atlas">🌀 Gut</a>
+            </nav>
+        </div>
+        <div class="brand-tag">NAVADA Atlas — your blood sugar, in balance</div>
+    </header>
+
+    <button id="reopen" title="Show panel">☰ Controls</button>
+
+    <div id="mobile-explode">
+        <input id="mexplode" type="range" min="0" max="100" value="0">
+        <span class="mx-label">EXPLODE</span>
+    </div>
+    <button id="mobile-agent" title="Ask the AI tutor">AI</button>
+    <button id="mobile-rotate" title="Auto-rotate" aria-label="Auto-rotate">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <polyline points="21 3 21 9 15 9"></polyline>
+        </svg>
+    </button>
+
+    <aside id="panel">
+        <button id="collapse-btn" title="Hide panel">⟨</button>
+
+        <nav class="panel-nav">
+            <button id="nav-atlas" class="nav-tab active">Atlas</button>
+            <button id="nav-about" class="nav-tab">About</button>
+        </nav>
+
+        <div id="atlas-view">
+        <div class="p-section" id="sec-regions">
+            <div class="p-title">Parts</div>
+            <input id="search" class="search" type="text" placeholder="Search a part…">
+            <div id="region-list" class="region-list"></div>
+        </div>
+
+        <div class="p-section" id="sec-explore">
+            <div class="p-title">Explore</div>
+            <label class="ctl">
+                <span>Explode / assemble</span>
+                <input id="explode" type="range" min="0" max="100" value="0">
+            </label>
+            <label class="ctl-row"><input id="reveal" type="checkbox"> Reveal pancreas (X-ray)</label>
+            <label class="ctl-row"><input id="autorotate" type="checkbox"> Auto-rotate</label>
+            <label class="ctl-row"><input id="show-axes" type="checkbox"> Show axes (X / Y / Z)</label>
+            <label class="ctl-row"><input id="show-grid" type="checkbox"> Show grid</label>
+            <button id="reset" class="btn">Reset view</button>
+        </div>
+
+        <div class="p-section">
+            <div class="p-title">Blood sugar · states</div>
+            <div id="scenarios" class="scenarios"></div>
+        </div>
+
+        <div class="p-section">
+            <div class="p-title">Digestion &amp; response</div>
+            <div id="activities" class="activity-grid"></div>
+            <p id="scn-desc" class="scn-desc"></p>
+            <div id="legend" class="legend">
+                <span>Quiet</span><div class="legend-bar"></div><span>Working hard</span>
+            </div>
+        </div>
+
+        <div class="p-section" id="sec-telemetry">
+            <div class="p-title">Live telemetry <span id="tele-status" class="tele-status">in range</span></div>
+            <canvas id="telemetry" class="telemetry"></canvas>
+            <div class="tele-label">Continuous glucose · mg/dL</div>
+            <canvas id="sysbars" class="bands"></canvas>
+            <div class="tele-label">System activity</div>
+            <canvas id="bands" class="bands"></canvas>
+            <div class="tele-label">Hormones · Insulin · Glucagon · GLP-1</div>
+            <div class="tele-readouts">
+                <div class="tele-cell"><span class="tele-k">Glucose</span><span id="tele-glucose" class="tele-v">85 mg/dL</span></div>
+                <div class="tele-cell"><span class="tele-k">Insulin</span><span id="tele-insulin" class="tele-v">low</span></div>
+                <div class="tele-cell"><span class="tele-k">State</span><span id="tele-state" class="tele-v">Fasting</span></div>
+            </div>
+        </div>
+
+        <div class="p-section" id="sec-tutor">
+            <div class="p-title">NAVADA AI Doc <span id="tutor-status" class="tutor-status">…</span></div>
+            <div id="tutor-log" class="tutor-log"></div>
+            <div class="tutor-input">
+                <input id="tutor-text" type="text" placeholder="Ask about blood sugar…">
+                <button id="tutor-send" class="btn-send">↑</button>
+            </div>
+        </div>
+
+        <div class="p-foot">
+            Anatomy: Z-Anatomy (CC BY-SA 4.0) · BodyParts3D<br>
+            © NAVADA Edge Network
+        </div>
+        </div><!-- /atlas-view -->
+
+        <div id="about-view" hidden>
+            <div class="about-hero">
+                <div class="about-mark">NAVADA<span>·</span></div>
+                <div class="about-title">GlucoAtlas</div>
+                <p class="about-lead">An interactive 3D view of the organs that control your blood sugar — and part of a personal health simulator that can replay your own glucose data on the model.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>What it is</h4>
+                <p>The stomach, duodenum, pancreas, liver, gallbladder and spleen — the organs that turn a meal into fuel and keep blood sugar steady — each individually labelled with its name and role. You can watch how a meal, a sugary drink, exercise or unmanaged diabetes change glucose, insulin and glucagon in real time.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>How to use it</h4>
+                <ul>
+                    <li><b>Select</b> — click any organ (or pick from the list) to see its name, system and role in blood sugar, with a coloured leader-line callout.</li>
+                    <li><b>Explore</b> — use the explode slider to separate the organs, X-ray to fade the liver &amp; stomach and reveal the pancreas behind them, and toggle axes/grid.</li>
+                    <li><b>States</b> — choose a blood-sugar state (fasting, after a meal, sugary drink, exercise) or a process (digesting, insulin response, low blood sugar, unmanaged high); the gut churns, the pancreas pulses, and the organs involved light up.</li>
+                    <li><b>Telemetry</b> — watch a live continuous-glucose curve with the in-range band, per-system activity and the insulin / glucagon / GLP-1 hormones.</li>
+                    <li><b>NAVADA AI Doc</b> — ask anything; it knows what you've selected and teaches you more.</li>
+                </ul>
+            </div>
+
+            <div class="about-block">
+                <h4>Where this is heading</h4>
+                <p>NAVADA NeuroAtlas is growing into a personal health simulator. Blood-sugar data is now captured continuously by wearable glucose monitors (CGMs) like Dexcom and Freestyle Libre — so your own glucose trace could be loaded and replayed here, for example to see how a particular meal or a walk after dinner changed your levels.</p>
+                <p>The goal is a clear visual companion you can bring to appointments to talk through your metabolic health with doctors, dietitians and diabetes nurses. It sits alongside the brain, heart, lungs, eye and ear in the wider NAVADA Atlas, all running on the same engine so new organs can be added as needed.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>Data &amp; technology</h4>
+                <ul>
+                    <li><b>Anatomy</b> — Z-Anatomy (CC BY-SA 4.0) / BodyParts3D, 6 curated metabolic organs</li>
+                    <li><b>3D engine</b> — Three.js / WebGL</li>
+                    <li><b>NAVADA AI Doc</b> — NVIDIA NIM · Llama 3.3 70B</li>
+                    <li><b>Your data</b> — continuous glucose monitors (Dexcom, Freestyle Libre), Apple Health</li>
+                </ul>
+                <p class="about-disclaimer">An educational and visualisation aid to support conversations with healthcare professionals — not a medical device and not for diagnosis. Glucose and hormone levels are scientifically-informed dramatisations shown until your own data is loaded.</p>
+            </div>
+
+            <div class="about-credit">
+                Designed &amp; developed by<br><b>Lee Akpareva, MBA, MA</b><br>
+                <span>PhD Researcher · Wearable Neurotechnology<br>Brunel University of London</span>
+            </div>
+        </div><!-- /about-view -->
+    </aside>
+
+    <section id="info" class="info-card"></section>
+    <div id="tooltip"></div>
+
+    <svg id="leader-svg">
+        <line id="leader-line" x1="0" y1="0" x2="0" y2="0"></line>
+        <circle id="leader-dot" r="3.5"></circle>
+    </svg>
+    <div id="leader-label"></div>
+
+    <footer id="credit">
+        <span class="credit-main">Designed &amp; developed by <strong>Lee Akpareva</strong>, MBA, MA</span>
+        <span class="credit-sub">PhD Researcher · Wearable Neurotechnology · Brunel University of London</span>
+    </footer>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading NAVADA GlucoAtlas…</p>
+    </div>
+
+    <div id="viewer-container"></div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="js/gluco.js"></script>
+</body>
+</html>

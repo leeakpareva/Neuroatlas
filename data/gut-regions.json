@@ -1,0 +1,10 @@
+{
+  "Duodenum": { "name": "Duodenum", "system": "Small intestine", "color": "#fbbf24", "function": "The first stretch of small intestine, leaving the stomach. Bile and pancreatic enzymes pour in here to finish breaking food down, and most nutrients are absorbed across the long small intestine that follows. (The coiled jejunum and ileum aren't individually modelled here — this is where they begin.)" },
+
+  "Ascending colon": { "name": "Ascending Colon", "system": "Colon (large intestine)", "color": "#fb923c", "function": "The first part of the large intestine, climbing up the right side of the abdomen. By the time waste reaches here it is liquid; the colon's main job begins — reclaiming water and minerals and housing the gut microbiome that ferments fibre." },
+  "Transverse colon": { "name": "Transverse Colon", "system": "Colon (large intestine)", "color": "#f97316", "function": "Crosses the abdomen from right to left below the stomach. Water absorption continues and the contents slowly thicken. Trillions of gut bacteria here ferment fibre into short-chain fatty acids that feed the colon wall and influence metabolism and mood." },
+  "Descending colon": { "name": "Descending Colon", "system": "Colon (large intestine)", "color": "#ea580c", "function": "Runs down the left side of the abdomen, storing increasingly solid waste as more water is removed. Waves of muscle (peristalsis) push the contents toward the sigmoid colon." },
+  "Sigmoid colon": { "name": "Sigmoid Colon", "system": "Colon (large intestine)", "color": "#c2410c", "function": "The S-shaped final bend of the colon that holds formed stool until it's ready to pass. It is a common site of diverticula — small pouches that can form with age and a low-fibre diet." },
+
+  "Vermiform appendix": { "name": "Appendix", "system": "Accessory", "color": "#f43f5e", "function": "A small finger-shaped pouch hanging off the start of the large intestine. Once dismissed as useless, it is now seen as a reservoir of helpful gut bacteria and lymphoid (immune) tissue. If it gets blocked and inflamed — appendicitis — it causes sharp lower-right abdominal pain and is a surgical emergency." }
+}

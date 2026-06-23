@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NAVADA CardioAtlas — Interactive Heart</title>
+
+    <meta name="theme-color" content="#0d0708">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CardioAtlas">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/heart.css">
+</head>
+<body class="heart">
+    <header id="topbar">
+        <div class="brand-wrap">
+            <div class="brand">
+                <span class="brand-mark">NAVADA</span>
+                <span class="brand-sub">NeuroAtlas</span>
+            </div>
+            <nav class="organ-switch">
+                <a href="index.html" title="Brain atlas">🧠 Brain</a>
+                <a href="heart.html" class="active" title="Heart atlas">🫀 Heart</a>
+                <a href="lungs.html" title="Lungs atlas">🫁 Lungs</a>
+                <a href="eye.html" title="Eye atlas">👁️ Eye</a>
+                <a href="ear.html" title="Ear atlas">👂 Ear</a>
+                <a href="gluco.html" title="Glucose / metabolism atlas">🍔 Gluco</a>
+                <a href="gut.html" title="Gut / large intestine atlas">🌀 Gut</a>
+            </nav>
+        </div>
+        <div class="brand-tag">NAVADA Atlas — your heart, beat by beat</div>
+    </header>
+
+    <button id="reopen" title="Show panel">☰ Controls</button>
+
+    <div id="mobile-explode">
+        <input id="mexplode" type="range" min="0" max="100" value="0">
+        <span class="mx-label">EXPLODE</span>
+    </div>
+    <button id="mobile-agent" title="Ask the AI tutor">AI</button>
+    <button id="mobile-rotate" title="Auto-rotate" aria-label="Auto-rotate">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <polyline points="21 3 21 9 15 9"></polyline>
+        </svg>
+    </button>
+
+    <aside id="panel">
+        <button id="collapse-btn" title="Hide panel">⟨</button>
+
+        <nav class="panel-nav">
+            <button id="nav-atlas" class="nav-tab active">Atlas</button>
+            <button id="nav-about" class="nav-tab">About</button>
+        </nav>
+
+        <div id="atlas-view">
+        <div class="p-section" id="sec-regions">
+            <div class="p-title">Parts</div>
+            <input id="search" class="search" type="text" placeholder="Search a part…">
+            <div id="region-list" class="region-list"></div>
+        </div>
+
+        <div class="p-section" id="sec-explore">
+            <div class="p-title">Explore</div>
+            <label class="ctl">
+                <span>Explode / assemble</span>
+                <input id="explode" type="range" min="0" max="100" value="0">
+            </label>
+            <label class="ctl-row"><input id="reveal" type="checkbox"> Reveal valves &amp; muscles (X-ray)</label>
+            <label class="ctl-row"><input id="autorotate" type="checkbox"> Auto-rotate</label>
+            <label class="ctl-row"><input id="show-axes" type="checkbox"> Show axes (X / Y / Z)</label>
+            <label class="ctl-row"><input id="show-grid" type="checkbox"> Show grid</label>
+            <button id="reset" class="btn">Reset view</button>
+        </div>
+
+        <div class="p-section">
+            <div class="p-title">Cardiac cycle · states</div>
+            <div id="scenarios" class="scenarios"></div>
+        </div>
+
+        <div class="p-section">
+            <div class="p-title">Everyday activities</div>
+            <div id="activities" class="activity-grid"></div>
+            <p id="scn-desc" class="scn-desc"></p>
+            <div id="legend" class="legend">
+                <span>Quiet</span><div class="legend-bar"></div><span>Working hard</span>
+            </div>
+        </div>
+
+        <div class="p-section" id="sec-telemetry">
+            <div class="p-title">Live telemetry <span id="tele-status" class="tele-status">sinus rhythm</span></div>
+            <canvas id="telemetry" class="telemetry"></canvas>
+            <div class="tele-label">Lead II · ECG</div>
+            <canvas id="sysbars" class="bands"></canvas>
+            <div class="tele-label">Chamber activity</div>
+            <canvas id="bands" class="bands"></canvas>
+            <div class="tele-label">Chamber pressure · RA RV LA LV Ao (mmHg)</div>
+            <div class="tele-readouts">
+                <div class="tele-cell"><span class="tele-k">Heart rate</span><span id="tele-hr" class="tele-v">65 bpm</span></div>
+                <div class="tele-cell"><span class="tele-k">Blood pressure</span><span id="tele-bp" class="tele-v">118/76</span></div>
+                <div class="tele-cell"><span class="tele-k">SpO₂</span><span id="tele-spo2" class="tele-v">98%</span></div>
+            </div>
+        </div>
+
+        <div class="p-section" id="sec-tutor">
+            <div class="p-title">NAVADA AI Doc <span id="tutor-status" class="tutor-status">…</span></div>
+            <div id="tutor-log" class="tutor-log"></div>
+            <div class="tutor-input">
+                <input id="tutor-text" type="text" placeholder="Ask about the heart…">
+                <button id="tutor-send" class="btn-send">↑</button>
+            </div>
+        </div>
+
+        <div class="p-foot">
+            Anatomy: Z-Anatomy (CC BY-SA 4.0) · BodyParts3D<br>
+            © NAVADA Edge Network
+        </div>
+        </div><!-- /atlas-view -->
+
+        <div id="about-view" hidden>
+            <div class="about-hero">
+                <div class="about-mark">NAVADA<span>·</span></div>
+                <div class="about-title">CardioAtlas</div>
+                <p class="about-lead">An interactive 3D heart you can explore, take apart and watch beat — and part of a personal health simulator that can replay your own heart data on the model.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>What it is</h4>
+                <p>A real, anatomically segmented human heart you can rotate, explode and study. Every chamber, valve cusp and papillary muscle is individually labelled with its name and function, and you can simulate how the heart responds across everyday and clinical states — from rest to exercise to a heart attack.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>How to use it</h4>
+                <ul>
+                    <li><b>Select</b> — click any part (or pick from the list) to see its name, system and function, with a coloured leader-line callout.</li>
+                    <li><b>Explore</b> — use the explode slider to pull the heart apart, X-ray to fade the chamber walls and reveal the valves &amp; papillary muscles inside, and toggle axes/grid.</li>
+                    <li><b>States</b> — choose a cardiac-cycle phase or condition (systole, diastole, tachycardia, AF, infarction); involved parts flash and a live heatmap shows what is working hardest.</li>
+                    <li><b>Telemetry</b> — watch a live Lead-II ECG, per-chamber activity and chamber-pressure bars update in real time, with heart rate, blood pressure and SpO₂.</li>
+                    <li><b>NAVADA AI Doc</b> — ask anything; it knows what you've selected and teaches you more.</li>
+                </ul>
+            </div>
+
+            <div class="about-block">
+                <h4>Where this is heading</h4>
+                <p>NAVADA NeuroAtlas is growing into a personal health simulator. Heart data already exists on everyday wearables — Apple Watch ECG and heart rate, chest straps and pulse oximeters — so your own readings can be loaded and replayed here, for example to review how your heart behaved over the last week.</p>
+                <p>The goal is a clear visual companion you can bring to appointments to talk through your heart health with doctors and other healthcare professionals. It sits alongside the brain and lungs in the wider NAVADA Atlas, all running on the same engine so new organs can be added as needed.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>Data &amp; technology</h4>
+                <ul>
+                    <li><b>Anatomy</b> — Z-Anatomy (CC BY-SA 4.0) / BodyParts3D, 17 curated cardiac structures</li>
+                    <li><b>3D engine</b> — Three.js / WebGL</li>
+                    <li><b>NAVADA AI Doc</b> — NVIDIA NIM · Llama 3.3 70B</li>
+                    <li><b>Your data</b> — Apple Watch ECG / heart rate, chest straps, pulse oximeters</li>
+                </ul>
+                <p class="about-disclaimer">An educational and visualisation aid to support conversations with healthcare professionals — not a medical device and not for diagnosis. ECG and pressures are scientifically-informed dramatisations shown until your own data is loaded.</p>
+            </div>
+
+            <div class="about-credit">
+                Designed &amp; developed by<br><b>Lee Akpareva, MBA, MA</b><br>
+                <span>PhD Researcher · Wearable Neurotechnology<br>Brunel University of London</span>
+            </div>
+        </div><!-- /about-view -->
+    </aside>
+
+    <section id="info" class="info-card"></section>
+    <div id="tooltip"></div>
+
+    <svg id="leader-svg">
+        <line id="leader-line" x1="0" y1="0" x2="0" y2="0"></line>
+        <circle id="leader-dot" r="3.5"></circle>
+    </svg>
+    <div id="leader-label"></div>
+
+    <footer id="credit">
+        <span class="credit-main">Designed &amp; developed by <strong>Lee Akpareva</strong>, MBA, MA</span>
+        <span class="credit-sub">PhD Researcher · Wearable Neurotechnology · Brunel University of London</span>
+    </footer>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading NAVADA CardioAtlas…</p>
+    </div>
+
+    <div id="viewer-container"></div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="js/heart.js"></script>
+</body>
+</html>

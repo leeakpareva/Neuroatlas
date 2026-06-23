@@ -1,0 +1,57 @@
+/* NAVADA RespiroAtlas — lung theme.
+   Loads after style.css and re-tints the cyan brain palette to a respiratory
+   emerald. Most of the UI reads var(--accent); the rules below also cover the
+   few spots that hard-coded the cyan value. */
+
+body.lungs {
+    --accent: #34d399;
+    --errp:   #f5a829;
+    --bg:     #07100c;
+}
+
+body.lungs #viewer-container {
+    background: radial-gradient(circle at 60% 40%, #10201a 0%, #07100c 70%);
+}
+
+body.lungs .nav-tab.active {
+    background: linear-gradient(135deg, rgba(52,211,153,.18), rgba(52,211,153,.03));
+}
+body.lungs .list-item.active {
+    background: rgba(52,211,153,.14);
+    box-shadow: inset 0 0 0 1px rgba(52,211,153,.42);
+}
+body.lungs .scn-btn:hover { box-shadow: 0 8px 22px -12px rgba(52,211,153,.6); }
+body.lungs .scn-btn.active {
+    background: linear-gradient(90deg, rgba(52,211,153,.16), rgba(52,211,153,.03));
+}
+body.lungs .scn-desc { border-left-color: rgba(52,211,153,.45); }
+body.lungs .act-btn:hover { box-shadow: 0 8px 20px -12px rgba(52,211,153,.6); }
+body.lungs .act-btn.active {
+    background: linear-gradient(135deg, rgba(52,211,153,.16), rgba(52,211,153,.02));
+    box-shadow: inset 0 0 0 1px rgba(52,211,153,.3);
+}
+body.lungs .btn:hover {
+    box-shadow: 0 0 0 1px rgba(52,211,153,.25), 0 6px 18px -8px rgba(52,211,153,.5);
+}
+
+/* danger states (asthma / breath-hold) */
+body.lungs .scn-btn[data-key="hold"].active,
+body.lungs .act-btn[data-key="asthma"].active {
+    border-color: var(--errp);
+}
+body.lungs .scn-btn[data-key="hold"]::before { background: var(--errp); }
+
+body.lungs .msg.user { background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.3); }
+body.lungs .btn-send { background: linear-gradient(135deg, #5ee7b0, #1fae7d); color: #04261b; }
+body.lungs .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(52,211,153,.8); }
+
+body.lungs #leader-line { filter: drop-shadow(0 0 4px rgba(52,211,153,.45)); }
+
+body.lungs #mobile-agent {
+    background: linear-gradient(135deg, #5ee7b0, #1fae7d); color: #04261b;
+    box-shadow: 0 8px 22px -6px rgba(52,211,153,.7);
+}
+body.lungs #mobile-rotate.active {
+    background: linear-gradient(135deg, #5ee7b0, #1fae7d); color: #04261b;
+    box-shadow: 0 8px 22px -6px rgba(52,211,153,.7);
+}

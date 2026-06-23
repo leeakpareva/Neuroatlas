@@ -1,0 +1,48 @@
+{
+  "region_cingulate_anteriorCingulate_L": { "name": "Anterior Cingulate (L)", "system": "Limbic / Cingulate", "color": "#ff1ad9", "errp": true, "function": "Error detection and conflict monitoring. This is where the error-related potential (ErrP) originates — the involuntary signal NAVADA_9 reads to know your brain disagreed with a machine decision." },
+  "region_cingulate_anteriorCingulate_R": { "name": "Anterior Cingulate (R)", "system": "Limbic / Cingulate", "color": "#ff1ad9", "errp": true, "function": "Error detection and conflict monitoring. Generates the error-related potential (ErrP) that NAVADA_9 captures at the mastoid to close the brain–AI loop." },
+
+  "region_cerebrum_frontalLobe_L": { "name": "Frontal Lobe (L)", "system": "Cerebrum", "color": "#3373f2", "function": "Executive function, planning, decision-making, voluntary movement, language production and personality. Heavily involved in judging whether an AI action was right or wrong." },
+  "region_cerebrum_frontalLobe_R": { "name": "Frontal Lobe (R)", "system": "Cerebrum", "color": "#3373f2", "function": "Executive function, planning, decision-making, voluntary movement and personality. Works with the anterior cingulate during error evaluation." },
+
+  "region_cerebrum_parietalLobe_L": { "name": "Parietal Lobe (L)", "system": "Cerebrum", "color": "#40cc73", "function": "Integrates sensory information, spatial awareness, touch, and navigation. Builds the body's map of the world." },
+  "region_cerebrum_parietalLobe_R": { "name": "Parietal Lobe (R)", "system": "Cerebrum", "color": "#40cc73", "function": "Integrates sensory information and spatial attention. Key to perceiving where objects are around you." },
+
+  "region_cerebrum_temporalLobe_L": { "name": "Temporal Lobe (L)", "system": "Cerebrum", "color": "#f2cc33", "function": "Hearing, language comprehension, and memory formation. Houses the auditory cortex and supports recognising what you see and hear." },
+  "region_cerebrum_temporalLobe_R": { "name": "Temporal Lobe (R)", "system": "Cerebrum", "color": "#f2cc33", "function": "Hearing, facial recognition and memory. Processes tone, music and emotional context of sound." },
+
+  "region_cerebrum_occipitalLobe_L": { "name": "Occipital Lobe (L)", "system": "Cerebrum", "color": "#f27333", "function": "The primary visual cortex. Processes everything you see — colour, motion and shape." },
+  "region_cerebrum_occipitalLobe_R": { "name": "Occipital Lobe (R)", "system": "Cerebrum", "color": "#f27333", "function": "Visual processing of the opposite field of view. Turns raw light into recognisable images." },
+
+  "region_cerebrum_insula_L": { "name": "Insula (L)", "system": "Cerebrum", "color": "#8cbfd9", "function": "Interoception (sensing the body's internal state), emotion, and the gut feeling that something is wrong." },
+  "region_cerebrum_insula_R": { "name": "Insula (R)", "system": "Cerebrum", "color": "#8cbfd9", "function": "Awareness of internal bodily signals, risk and discomfort. Contributes to the instinctive 'no' response." },
+
+  "region_cerebellum_L": { "name": "Cerebellum (L)", "system": "Cerebellum", "color": "#33b3b3", "function": "Coordinates movement, balance, timing and motor learning. Makes actions smooth and precise." },
+  "region_cerebellum_R": { "name": "Cerebellum (R)", "system": "Cerebellum", "color": "#33b3b3", "function": "Fine-tunes motor control and balance, and supports rapid, well-timed reactions." },
+  "region_cerebellum_vermis": { "name": "Cerebellar Vermis", "system": "Cerebellum", "color": "#33b3b3", "function": "Midline cerebellum governing posture, gait and trunk stability." },
+
+  "region_brainstem_midbrain": { "name": "Midbrain", "system": "Brainstem", "color": "#8c8c99", "function": "Relays vision and hearing reflexes, controls eye movement, and regulates arousal and alertness." },
+  "region_brainstem_pons": { "name": "Pons", "system": "Brainstem", "color": "#8c8c99", "function": "Bridges the brain and cerebellum; regulates breathing, sleep and facial signals." },
+  "region_brainstem_medulla": { "name": "Medulla Oblongata", "system": "Brainstem", "color": "#8c8c99", "function": "Controls automatic vital functions: heartbeat, breathing and blood pressure." },
+
+  "region_diencephalon_thalamus_L": { "name": "Thalamus (L)", "system": "Diencephalon", "color": "#4dd9e6", "function": "The brain's relay station — routes nearly all sensory and motor signals to the cortex and gates attention." },
+  "region_diencephalon_thalamus_R": { "name": "Thalamus (R)", "system": "Diencephalon", "color": "#4dd9e6", "function": "Relays sensory and motor information to the cortex and regulates consciousness and alertness." },
+
+  "region_limbic_hippocampus_L": { "name": "Hippocampus (L)", "system": "Limbic", "color": "#f28c26", "function": "Forms new memories and consolidates learning. Strongly impaired by sleep loss." },
+  "region_limbic_hippocampus_R": { "name": "Hippocampus (R)", "system": "Limbic", "color": "#f28c26", "function": "Spatial memory and navigation; converts short-term experience into long-term memory." },
+
+  "region_limbic_amygdala_L": { "name": "Amygdala (L)", "system": "Limbic", "color": "#e63333", "function": "Threat detection and emotional response. Becomes hyperactive when tired or stressed." },
+  "region_limbic_amygdala_R": { "name": "Amygdala (R)", "system": "Limbic", "color": "#e63333", "function": "Processes fear, emotional salience and rapid emotional reactions." },
+
+  "region_basalGanglia_caudate_L": { "name": "Caudate Nucleus (L)", "system": "Basal Ganglia", "color": "#994dcc", "function": "Goal-directed action, habit and reward learning. Helps select and reinforce correct behaviour." },
+  "region_basalGanglia_caudate_R": { "name": "Caudate Nucleus (R)", "system": "Basal Ganglia", "color": "#994dcc", "function": "Procedural learning and feedback-based decision-making." },
+
+  "region_basalGanglia_putamen_L": { "name": "Putamen (L)", "system": "Basal Ganglia", "color": "#994dcc", "function": "Regulates movement and motor skill learning, working with the cortex to refine actions." },
+  "region_basalGanglia_putamen_R": { "name": "Putamen (R)", "system": "Basal Ganglia", "color": "#994dcc", "function": "Controls movement amplitude and automatic motor sequences." },
+
+  "region_basalGanglia_globusPallidus_L": { "name": "Globus Pallidus (L)", "system": "Basal Ganglia", "color": "#994dcc", "function": "Modulates and smooths voluntary movement, preventing unwanted motion." },
+  "region_basalGanglia_globusPallidus_R": { "name": "Globus Pallidus (R)", "system": "Basal Ganglia", "color": "#994dcc", "function": "Final output of the basal ganglia, fine-tuning motor commands sent to the thalamus." },
+
+  "region_connective_corpusCallosum": { "name": "Corpus Callosum", "system": "Connective", "color": "#d9d9e0", "function": "The bridge of ~200 million fibres connecting the two hemispheres so they share information." },
+  "region_diencephalon_hypothalamus": { "name": "Hypothalamus", "system": "Diencephalon", "color": "#f273b3", "function": "Master regulator of sleep, hunger, temperature, hormones and the sleep–wake cycle." }
+}

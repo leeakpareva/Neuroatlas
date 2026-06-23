@@ -1,0 +1,16 @@
+.git
+.gitignore
+.env
+.env.*
+.server.log
+*.blend
+*.log
+node_modules
+z-anatomy
+build_brain_glb.py
+render_preview.py
+generate_icons.py
+__pycache__
+*.pyc
+models/_uncompressed
+_opt

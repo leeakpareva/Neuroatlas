@@ -1,0 +1,50 @@
+/* NAVADA GutAtlas — gut theme.
+   Loads after style.css and re-tints the cyan brain palette to a warm orange.
+   Most of the UI reads var(--accent); the rules below also cover the few
+   spots that hard-coded the cyan value. */
+
+body.gut {
+    --accent: #f97316;
+    --errp:   #f43f5e;
+    --bg:     #0c0904;
+}
+
+body.gut #viewer-container {
+    background: radial-gradient(circle at 60% 40%, #281605 0%, #0c0904 70%);
+}
+
+body.gut .nav-tab.active {
+    background: linear-gradient(135deg, rgba(249,115,22,.18), rgba(249,115,22,.03));
+}
+body.gut .list-item.active {
+    background: rgba(249,115,22,.14);
+    box-shadow: inset 0 0 0 1px rgba(249,115,22,.42);
+}
+body.gut .scn-btn:hover { box-shadow: 0 8px 22px -12px rgba(249,115,22,.6); }
+body.gut .scn-btn.active {
+    background: linear-gradient(90deg, rgba(249,115,22,.16), rgba(249,115,22,.03));
+}
+body.gut .scn-desc { border-left-color: rgba(249,115,22,.45); }
+body.gut .act-btn:hover { box-shadow: 0 8px 20px -12px rgba(249,115,22,.6); }
+body.gut .act-btn.active {
+    background: linear-gradient(135deg, rgba(249,115,22,.16), rgba(249,115,22,.02));
+    box-shadow: inset 0 0 0 1px rgba(249,115,22,.3);
+}
+body.gut .btn:hover {
+    box-shadow: 0 0 0 1px rgba(249,115,22,.25), 0 6px 18px -8px rgba(249,115,22,.5);
+}
+
+body.gut .msg.user { background: rgba(249,115,22,.12); border-color: rgba(249,115,22,.3); }
+body.gut .btn-send { background: linear-gradient(135deg, #fdba74, #ea580c); color: #2a1605; }
+body.gut .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(249,115,22,.8); }
+
+body.gut #leader-line { filter: drop-shadow(0 0 4px rgba(249,115,22,.45)); }
+
+body.gut #mobile-agent {
+    background: linear-gradient(135deg, #fdba74, #ea580c); color: #2a1605;
+    box-shadow: 0 8px 22px -6px rgba(249,115,22,.7);
+}
+body.gut #mobile-rotate.active {
+    background: linear-gradient(135deg, #fdba74, #ea580c); color: #2a1605;
+    box-shadow: 0 8px 22px -6px rgba(249,115,22,.7);
+}

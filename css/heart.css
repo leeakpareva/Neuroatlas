@@ -1,0 +1,65 @@
+/* NAVADA CardioAtlas — heart theme.
+   Loads after style.css and re-tints the cyan brain palette to a cardiac red.
+   Most of the UI reads var(--accent); the rules below also cover the few
+   spots that hard-coded the cyan value. */
+
+body.heart {
+    --accent: #ff5a6e;
+    --errp:   #ff2d55;
+    --bg:     #0a0708;
+}
+
+body.heart #viewer-container {
+    background: radial-gradient(circle at 60% 40%, #1b1014 0%, #0a0708 70%);
+}
+
+/* nav + list + scenario active states */
+body.heart .nav-tab.active {
+    background: linear-gradient(135deg, rgba(255,90,110,.18), rgba(255,90,110,.03));
+}
+body.heart .list-item.active {
+    background: rgba(255,90,110,.14);
+    box-shadow: inset 0 0 0 1px rgba(255,90,110,.42);
+}
+body.heart .scn-btn:hover { box-shadow: 0 8px 22px -12px rgba(255,90,110,.6); }
+body.heart .scn-btn.active {
+    background: linear-gradient(90deg, rgba(255,90,110,.16), rgba(255,90,110,.03));
+}
+body.heart .scn-desc { border-left-color: rgba(255,90,110,.45); }
+body.heart .act-btn:hover { box-shadow: 0 8px 20px -12px rgba(255,90,110,.6); }
+body.heart .act-btn.active {
+    background: linear-gradient(135deg, rgba(255,90,110,.16), rgba(255,90,110,.02));
+    box-shadow: inset 0 0 0 1px rgba(255,90,110,.3);
+}
+body.heart .btn:hover {
+    box-shadow: 0 0 0 1px rgba(255,90,110,.25), 0 6px 18px -8px rgba(255,90,110,.5);
+}
+
+/* danger states (infarction / AF) highlight buttons */
+body.heart .scn-btn[data-key="mi"].active,
+body.heart .scn-btn[data-key="afib"].active {
+    border-color: var(--errp);
+    background: linear-gradient(90deg, rgba(255,45,85,.18), rgba(255,45,85,.02));
+}
+body.heart .scn-btn[data-key="mi"]::before,
+body.heart .scn-btn[data-key="afib"]::before { background: var(--errp); }
+
+/* tutor + send button */
+body.heart .msg.user { background: rgba(255,90,110,.12); border-color: rgba(255,90,110,.3); }
+body.heart .btn-send { background: linear-gradient(135deg, #ff7a8c, #e23a55); color: #2a0710; }
+body.heart .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(255,90,110,.8); }
+
+/* leader-line callout glow */
+body.heart #leader-line { filter: drop-shadow(0 0 4px rgba(255,90,110,.45)); }
+
+/* mobile floating controls */
+body.heart #mobile-agent {
+    background: linear-gradient(135deg, #ff7a8c, #e23a55); color: #2a0710;
+    box-shadow: 0 8px 22px -6px rgba(255,90,110,.7);
+}
+body.heart #mobile-rotate.active {
+    background: linear-gradient(135deg, #ff7a8c, #e23a55); color: #2a0710;
+    box-shadow: 0 8px 22px -6px rgba(255,90,110,.7);
+}
+
+/* the heatmap legend already spans blue→red; keep as-is */

@@ -1,0 +1,50 @@
+/* NAVADA GlucoAtlas — metabolism theme.
+   Loads after style.css and re-tints the cyan brain palette to magenta.
+   Most of the UI reads var(--accent); the rules below also cover the few
+   spots that hard-coded the cyan value. */
+
+body.gluco {
+    --accent: #ec4899;
+    --errp:   #84cc16;
+    --bg:     #0c0610;
+}
+
+body.gluco #viewer-container {
+    background: radial-gradient(circle at 60% 40%, #2a0a22 0%, #0c0610 70%);
+}
+
+body.gluco .nav-tab.active {
+    background: linear-gradient(135deg, rgba(236,72,153,.18), rgba(236,72,153,.03));
+}
+body.gluco .list-item.active {
+    background: rgba(236,72,153,.14);
+    box-shadow: inset 0 0 0 1px rgba(236,72,153,.42);
+}
+body.gluco .scn-btn:hover { box-shadow: 0 8px 22px -12px rgba(236,72,153,.6); }
+body.gluco .scn-btn.active {
+    background: linear-gradient(90deg, rgba(236,72,153,.16), rgba(236,72,153,.03));
+}
+body.gluco .scn-desc { border-left-color: rgba(236,72,153,.45); }
+body.gluco .act-btn:hover { box-shadow: 0 8px 20px -12px rgba(236,72,153,.6); }
+body.gluco .act-btn.active {
+    background: linear-gradient(135deg, rgba(236,72,153,.16), rgba(236,72,153,.02));
+    box-shadow: inset 0 0 0 1px rgba(236,72,153,.3);
+}
+body.gluco .btn:hover {
+    box-shadow: 0 0 0 1px rgba(236,72,153,.25), 0 6px 18px -8px rgba(236,72,153,.5);
+}
+
+body.gluco .msg.user { background: rgba(236,72,153,.12); border-color: rgba(236,72,153,.3); }
+body.gluco .btn-send { background: linear-gradient(135deg, #f9a8d4, #db2777); color: #2a0820; }
+body.gluco .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(236,72,153,.8); }
+
+body.gluco #leader-line { filter: drop-shadow(0 0 4px rgba(236,72,153,.45)); }
+
+body.gluco #mobile-agent {
+    background: linear-gradient(135deg, #f9a8d4, #db2777); color: #2a0820;
+    box-shadow: 0 8px 22px -6px rgba(236,72,153,.7);
+}
+body.gluco #mobile-rotate.active {
+    background: linear-gradient(135deg, #f9a8d4, #db2777); color: #2a0820;
+    box-shadow: 0 8px 22px -6px rgba(236,72,153,.7);
+}
