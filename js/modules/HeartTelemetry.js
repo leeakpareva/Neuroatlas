@@ -52,9 +52,11 @@ export class HeartTelemetry {
         let v = 0;
         if (a.irregular) v += 0.035 * Math.sin(this.t * 38 + p * 70);   // fibrillatory baseline, no clean P
         else v += 0.12 * gauss(p, 0.17, 0.018);                         // P wave
-        v += -0.07 * gauss(p, 0.295, 0.008);                            // Q
-        v += 0.98 * gauss(p, 0.33, 0.0085);                             // R
-        v += -0.17 * gauss(p, 0.365, 0.009);                            // S
+        const amp = a.lowVoltage ? 0.4 : 1;                             // myocarditis: small complexes
+        const w = a.wide ? 2.2 : 1;                                     // dilated CM: broad QRS
+        v += -0.07 * amp * gauss(p, 0.295, 0.008 * w);                  // Q
+        v += 0.98 * amp * gauss(p, 0.33, 0.0085 * w);                   // R
+        v += -0.17 * amp * gauss(p, 0.365 + (a.wide ? 0.022 : 0), 0.009 * w); // S
         if (a.mi) v += 0.17 * gauss(p, 0.49, 0.075);                    // ST elevation
         v += 0.22 * gauss(p, 0.60, 0.030);                              // T wave
         return v;
@@ -78,6 +80,8 @@ export class HeartTelemetry {
         if (this.els.status) {
             let txt = 'sinus rhythm', cls = '';
             if (this.activity.mi) { txt = '● INFARCTION'; cls = 'on'; }
+            else if (this.key === 'myocarditis') { txt = '● MYOCARDITIS'; cls = 'on'; }
+            else if (this.key === 'dilated') { txt = '● HEART FAILURE'; cls = 'on'; }
             else if (this.key === 'afib') { txt = '● ATRIAL FIB'; cls = 'on'; }
             else if (this.activity.hr > 100) { txt = '● tachycardia'; cls = 'warn'; }
             else if (this.activity.hr < 55) { txt = '● bradycardia'; cls = 'warn'; }
@@ -94,7 +98,7 @@ export class HeartTelemetry {
         // faint ECG grid
         c.strokeStyle = 'rgba(255,255,255,0.04)'; c.lineWidth = 1;
         for (let x = 0; x < W; x += 18) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, traceH); c.stroke(); }
-        const danger = this.activity.mi || this.key === 'afib';
+        const danger = this.activity.mi || this.activity.irregular || this.activity.beatAmp < 0.8;
         c.strokeStyle = danger ? '#ff3b5c' : '#ff5a6e'; c.lineWidth = 1.5; c.beginPath();
         for (let i = 0; i < this.trace.length; i++) {
             const x = (i / (this.trace.length - 1)) * W, y = this.trace[i] * traceH;

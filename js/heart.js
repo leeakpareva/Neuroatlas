@@ -14,7 +14,7 @@ import { CameraController } from './modules/CameraController.js';
 import { LightingManager } from './modules/LightingManager.js';
 import { InteractionManager } from './modules/InteractionManager.js';
 import { ExplodeManager } from './modules/ExplodeManager.js';
-import { HeartActivity, SCENARIOS } from './modules/HeartActivity.js';
+import { HeartActivity, SCENARIOS, DISEASES } from './modules/HeartActivity.js';
 import { HeartTelemetry } from './modules/HeartTelemetry.js';
 import { TutorManager } from './modules/TutorManager.js';
 
@@ -77,13 +77,16 @@ class NavadaHeart {
                     organ: 'heart',
                     region: this.selected && this.regions[this.selected]
                         ? `${this.regions[this.selected].name} — ${this.regions[this.selected].function}` : null,
-                    scenario: this.activity ? SCENARIOS[this.activity.active].name : null,
+                    scenario: this.activity ? (SCENARIOS[this.activity.active] || DISEASES[this.activity.active] || {}).name : null,
                 }));
 
             this._modelBaseScale = this.heartModel.model.scale.clone();
             this._buildUI();
             this.loadingEl.classList.add('hidden');
             this.animate();
+            // deep-link: ?state=<scenario|disease> auto-runs that state on load
+            const st = new URLSearchParams(location.search).get('state');
+            if (st && (SCENARIOS[st] || DISEASES[st])) { this._runScenario(st); this.activity.snap(); }
             console.log('NAVADA CardioAtlas ready —', this.meshes.length, 'parts');
         } catch (err) {
             console.error(err);
@@ -182,12 +185,47 @@ class NavadaHeart {
     }
 
     _runScenario(key) {
+        const def = SCENARIOS[key] || DISEASES[key];
         if (key === 'rest') this.activity.clear(); else this.activity.apply(key);
         if (this.selected) this.select(this.selected);
-        this.telemetry.setScenario(key, SCENARIOS[key]);
-        document.getElementById('scn-desc').textContent = SCENARIOS[key].desc;
+        this.telemetry.setScenario(key, def);
+        document.getElementById('scn-desc').textContent = def.desc;
         document.querySelectorAll('[data-key]').forEach(b => b.classList.toggle('active', b.dataset.key === key));
         document.getElementById('legend').style.display = key === 'rest' ? 'none' : 'flex';
+        this._updateDiseaseHud(def);
+    }
+
+    // Show/hide the cinematic disease HUD and put the heart into "showcase"
+    // (slow auto-rotate) so the 3D effect reads clearly from every angle.
+    _updateDiseaseHud(def) {
+        const hud = document.getElementById('disease-hud');
+        if (!hud) return;
+        const isDisease = def && def.cat === 'disease';
+        const setRotate = (on) => {
+            this.camera.enableAutoRotate(on);
+            const cb = document.getElementById('autorotate'); if (cb) cb.checked = on;
+            const mr = document.getElementById('mobile-rotate'); if (mr) mr.classList.toggle('active', on);
+        };
+        if (isDisease) {
+            document.getElementById('dz-hud-name').textContent = def.name;
+            document.getElementById('dz-hud-desc').textContent = def.desc;
+            const bp = document.getElementById('dz-bp'), spo2 = document.getElementById('dz-spo2'),
+                  ecg = document.getElementById('dz-ecg');
+            bp.textContent = def.bp ? `${def.bp[0]}/${def.bp[1]}` : '—';
+            spo2.textContent = def.spo2 != null ? def.spo2 + '%' : '—';
+            ecg.textContent = def.mi ? 'ST elevation' : def.irregular ? 'irregular' :
+                def.wide ? 'wide QRS' : def.lowVoltage ? 'low voltage' : 'abnormal';
+            bp.closest('.dz-vital').classList.toggle('alert', !!def.bp && def.bp[0] < 100);
+            spo2.closest('.dz-vital').classList.toggle('alert', def.spo2 != null && def.spo2 < 94);
+            ecg.closest('.dz-vital').classList.add('alert');
+            hud.hidden = false;
+            requestAnimationFrame(() => hud.classList.add('show'));
+            setRotate(true);
+        } else {
+            hud.classList.remove('show');
+            setTimeout(() => { if (!hud.classList.contains('show')) hud.hidden = true; }, 400);
+            setRotate(false);
+        }
     }
 
     _buildUI() {
@@ -244,6 +282,21 @@ class NavadaHeart {
             else { b.className = 'scn-btn' + (key === 'rest' ? ' active' : ''); b.textContent = s.name; conceptWrap.appendChild(b); }
         }
         document.getElementById('scn-desc').textContent = SCENARIOS.rest.desc;
+
+        // Diseases & conditions — pathology states with distinct 3D + ECG signatures
+        const dzWrap = document.getElementById('diseases');
+        if (dzWrap) {
+            dzWrap.innerHTML = '';
+            for (const key of Object.keys(DISEASES)) {
+                const d = DISEASES[key];
+                const b = document.createElement('button');
+                b.dataset.key = key; b.className = 'act-btn dz-btn'; b.textContent = d.name;
+                b.onclick = () => this._runScenario(key);
+                dzWrap.appendChild(b);
+            }
+        }
+        const dzClose = document.getElementById('dz-hud-close');
+        if (dzClose) dzClose.onclick = () => this._runScenario('rest');
 
         const panel = document.getElementById('panel');
         const closePanel = () => {
@@ -334,11 +387,22 @@ class NavadaHeart {
         this.camera.update();
         if (this.activity) this.activity.update(dt);
         if (this.telemetry) this.telemetry.update(dt);
-        // make the whole heart visibly beat with the cardiac cycle
+        // make the whole heart visibly beat — diseases weaken the beat (beatAmp)
+        // and enlarge the heart (dilation) for an at-a-glance pathology read
         if (this._modelBaseScale && this.activity) {
-            const s = 1 + this.activity.contraction * 0.035;
+            const s = this.activity.dilation * (1 + this.activity.contraction * 0.035 * this.activity.beatAmp);
             this.heartModel.model.scale.set(
                 this._modelBaseScale.x * s, this._modelBaseScale.y * s, this._modelBaseScale.z * s);
+        }
+        // live HR in the disease HUD
+        const hud = document.getElementById('disease-hud');
+        if (hud && hud.classList.contains('show')) {
+            const hrEl = document.getElementById('dz-hr');
+            if (hrEl) {
+                const hr = Math.round(this.activity.hr);
+                hrEl.textContent = hr + ' bpm';
+                hrEl.closest('.dz-vital').classList.toggle('alert', hr > 100 || hr < 55);
+            }
         }
         this._updateLeader();
         this.sceneManager.render();

@@ -171,16 +171,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(payload)
 
     def end_headers(self):
-        # Path-based caching: HTML always revalidates (so new features show up via
-        # a cheap 304), static assets cache hard for a day so repeat visits are
-        # instant. The big 3D models + icons never block on the network twice.
-        p = self.path.split("?", 1)[0]
+        # Path-based caching. Only the big IMMUTABLE binaries (3D models, images,
+        # fonts) cache hard for a day — the app shell (html/js/css/json) always
+        # revalidates so new features and fixes show up immediately via a cheap 304.
+        p = self.path.split("?", 1)[0].lower()
+        ASSETS = (".glb", ".gltf", ".bin", ".wasm", ".png", ".jpg", ".jpeg",
+                  ".webp", ".gif", ".woff2", ".woff", ".ico")
         if p.startswith("/api"):
             self.send_header("Cache-Control", "no-store")
-        elif p.endswith(".html") or p.endswith("/"):
-            self.send_header("Cache-Control", "no-cache")
-        else:
+        elif p.endswith(ASSETS):
             self.send_header("Cache-Control", "public, max-age=86400")
+        else:
+            self.send_header("Cache-Control", "no-cache")
         super().end_headers()
 
     def do_GET(self):

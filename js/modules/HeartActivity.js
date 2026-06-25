@@ -72,6 +72,26 @@ export const SCENARIOS = {
         levels: { 'left ventricle': 0.7, 'right ventricle': 0.6, 'right atrium': 0.6, 'left atrium': 0.6 }, pulse: [] },
 };
 
+// Diseases & conditions — each shows a distinct visual mechanism:
+//   beatAmp  : contraction strength (1 = normal, <1 = feeble pump)
+//   dilate   : baseline size of the whole heart (1 = normal, >1 = enlarged)
+//   akinetic : part-name substrings whose muscle stops moving with the beat
+//   ecg flags: mi (ST elevation) · irregular (no P, irregular) · lowVoltage · wide (broad QRS)
+export const DISEASES = {
+    infarction: { cat: 'disease', name: 'Heart Attack (MI)', hr: 108, bp: [94, 62], spo2: 91,
+        beatAmp: 0.6, dilate: 1.0, mi: true, akinetic: ['left ventricle', 'inferior papillary muscle of left'],
+        desc: 'A coronary artery is blocked, starving part of the left-ventricular muscle of oxygen. That wall turns ischemic (cold blue) and stops contracting — watch it fall still while the rest of the heart keeps beating. The ECG shows the tell-tale ST elevation, and the weakened pump drops blood pressure and oxygen.',
+        levels: { 'left ventricle': 0.04, 'inferior papillary muscle of left': 0.1, 'left atrium': 0.5, 'right ventricle': 0.62, 'right atrium': 0.55 }, pulse: [] },
+    myocarditis: { cat: 'disease', name: 'Viral Myocarditis', hr: 118, bp: [104, 70], spo2: 95,
+        beatAmp: 0.55, dilate: 1.05, irregular: true, lowVoltage: true, inflame: true,
+        desc: 'A virus (such as Coxsackie, flu or COVID) inflames the heart muscle itself. The whole myocardium swells and reddens, contractions become weak and the rhythm turns irritable and irregular. On the ECG the beats shrink (low voltage). Often it settles, but severe cases can scar the muscle.',
+        levels: { 'left ventricle': 0.95, 'right ventricle': 0.92, 'left atrium': 0.85, 'right atrium': 0.85, 'papillary': 0.8 }, pulse: ['ventricle', 'atrium'] },
+    dilated: { cat: 'disease', name: 'Dilated Cardiomyopathy', hr: 102, bp: [98, 70], spo2: 94,
+        beatAmp: 0.42, dilate: 1.18, wide: true,
+        desc: 'The heart muscle stretches and thins until the chambers balloon — see the whole heart enlarge. A bigger heart is not a stronger one: each beat is feeble and the pump struggles, the hallmark of heart failure. The rate creeps up to compensate and the conduction slows, widening the ECG.',
+        levels: { 'left ventricle': 0.7, 'right ventricle': 0.68, 'left atrium': 0.6, 'right atrium': 0.6 }, pulse: [] },
+};
+
 export class HeartActivity {
     constructor(scene, idToMesh, regions) {
         this.scene = scene;
@@ -83,6 +103,11 @@ export class HeartActivity {
         // cardiac cycle
         this.hr = 65; this.hrTgt = 65;
         this.rr = 1; this.irregular = false; this.mi = false;
+        this.lowVoltage = false; this.wide = false;
+        this.beatAmp = 1; this.beatAmpTgt = 1;       // contraction strength (disease weakens it)
+        this.dilation = 1; this.dilationTgt = 1;     // whole-heart size (disease enlarges it)
+        this.inflammatory = false;                   // viral myocarditis: feverish shimmer
+        this.diseaseMode = false;                    // mutes colour + glow for a natural pathology look
         this._beatT = 0; this.beatPhase = 0; this.contraction = 0;
 
         this.state = new Map();
@@ -95,6 +120,7 @@ export class HeartActivity {
                 curCol: base.clone(), tgtCol: base.clone(),
                 curGlow: 0, tgtGlow: 0, flash: 0,
                 pulsing: false, phase: (i++ % 12) * 0.6, heatMode: false,
+                beatFactor: 1,   // 0 = akinetic (infarcted muscle stops moving)
             });
         }
     }
@@ -107,25 +133,56 @@ export class HeartActivity {
     }
 
     apply(key) {
-        const s = SCENARIOS[key];
+        const s = SCENARIOS[key] || DISEASES[key];
         if (!s) return;
         this.active = key;
         this.hrTgt = s.hr;
         this.irregular = !!s.irregular;
         this.mi = !!s.mi;
+        this.lowVoltage = !!s.lowVoltage;
+        this.wide = !!s.wide;
+        this.beatAmpTgt = s.beatAmp != null ? s.beatAmp : 1;
+        this.dilationTgt = s.dilate != null ? s.dilate : 1;
+        this.inflammatory = !!s.inflame;
+        const isDisease = s.cat === 'disease';
+        this.diseaseMode = isDisease;
+        const akin = s.akinetic || [];
         const heatMode = key !== 'rest';
         for (const [id, st] of this.state) {
+            const isAkin = akin.some(a => id.toLowerCase().includes(a));
             const lvl = heatMode ? this._levelFor(id, s.levels) : 0.5;
             st.tgtLevel = lvl;
             st.heatMode = heatMode;
             st.tgtCol = heatMode ? heat(lvl) : st.base.clone();
             st.tgtGlow = heatMode ? Math.abs(lvl - 0.5) * 2 : 0;
+            // diseases read as real tissue, not neon: blend the heat colour back
+            // toward the chamber's own anatomy colour and soften the glow
+            if (isDisease && heatMode && !isAkin) {
+                st.tgtCol = heat(lvl).lerp(st.base, 0.5);
+                st.tgtGlow *= 0.45;
+            }
             st.pulsing = heatMode && s.pulse.some(p => id.toLowerCase().includes(p));
-            st.flash = (heatMode && lvl >= 0.7) ? 2.0 : 0;
+            // no white strobe flash for diseases — keep it clinical
+            st.flash = (heatMode && !isDisease && lvl >= 0.7) ? 2.0 : 0;
+            st.beatFactor = isAkin ? 0 : 1;
+            // infarcted muscle is dead tissue — a dark dusky necrotic colour, no glow
+            if (isAkin) { st.tgtCol = new THREE.Color(0x16202e); st.tgtGlow = 0; st.flash = 0; }
         }
     }
 
     clear() { this.apply('rest'); }
+
+    /** jump straight to the applied target state (no tween) — for deep-links */
+    snap() {
+        this.beatAmp = this.beatAmpTgt;
+        this.dilation = this.dilationTgt;
+        this.hr = this.hrTgt;
+        for (const [, st] of this.state) {
+            st.curLevel = st.tgtLevel;
+            st.curCol.copy(st.tgtCol);
+            st.curGlow = st.tgtGlow;
+        }
+    }
 
     /** ventricular contraction envelope for a given beat phase (0..1) */
     _contractionAt(phase) {
@@ -138,6 +195,8 @@ export class HeartActivity {
 
         // advance the cardiac cycle
         this.hr += (this.hrTgt - this.hr) * Math.min(1, dt * 2.5);
+        this.beatAmp += (this.beatAmpTgt - this.beatAmp) * Math.min(1, dt * 2.2);
+        this.dilation += (this.dilationTgt - this.dilation) * Math.min(1, dt * 2.2);
         const period = (60 / Math.max(20, this.hr)) * this.rr;
         this._beatT += dt;
         if (this._beatT >= period) {
@@ -157,9 +216,16 @@ export class HeartActivity {
             mat.color.copy(st.curCol);
             const shimmer = 0.05 * (0.5 + 0.5 * Math.sin(this._t * 1.6 + st.phase));
             let glow = st.curGlow * 0.7 + shimmer;
-            // every part throbs gently with the live heartbeat
-            glow += this.contraction * 0.28;
-            if (st.pulsing) glow += 0.5 * this.contraction + 0.25 * (0.5 + 0.5 * Math.sin(this._t * 6));
+            // every part throbs gently with the live heartbeat — but akinetic
+            // (infarcted) muscle and a feeble pump throb less or not at all
+            glow += this.contraction * 0.28 * st.beatFactor * this.beatAmp;
+            if (st.pulsing) glow += (0.5 * this.contraction + 0.25 * (0.5 + 0.5 * Math.sin(this._t * 6))) * st.beatFactor;
+            // viral myocarditis: a subtle, slow inflammatory shimmer (not a bright flicker)
+            if (this.inflammatory && st.heatMode && st.beatFactor > 0) {
+                glow += 0.05 + 0.06 * (0.5 + 0.5 * Math.sin(this._t * 3.5 + st.phase * 1.8));
+            }
+            // overall, a diseased heart glows more dully than an active healthy one
+            if (this.diseaseMode) glow *= 0.7;
             mat.emissive.copy(st.heatMode ? st.curCol : st.base);
             if (st.flash > 0) {
                 st.flash = Math.max(0, st.flash - dt);

@@ -93,6 +93,12 @@
             </div>
         </div>
 
+        <div class="p-section" id="sec-diseases">
+            <div class="p-title">⚠ Diseases &amp; conditions</div>
+            <div id="diseases" class="activity-grid"></div>
+            <p class="dz-note">Watch the 3D heart and the ECG change. Pick a state above or press <b>Reset view</b> to return to a healthy heart.</p>
+        </div>
+
         <div class="p-section" id="sec-telemetry">
             <div class="p-title">Live telemetry <span id="tele-status" class="tele-status">sinus rhythm</span></div>
             <canvas id="telemetry" class="telemetry"></canvas>
@@ -169,6 +175,22 @@
             </div>
         </div><!-- /about-view -->
     </aside>
+
+    <!-- Disease simulation HUD — appears over the 3D view when a condition is active -->
+    <div id="disease-hud" hidden>
+        <div class="dz-hud-head">
+            <span class="dz-hud-dot"></span>
+            <span id="dz-hud-name">—</span>
+            <button id="dz-hud-close" title="Return to a healthy heart">↺ Healthy</button>
+        </div>
+        <p id="dz-hud-desc"></p>
+        <div class="dz-hud-vitals">
+            <div class="dz-vital"><span class="dz-vk">HR</span><span id="dz-hr" class="dz-vv">—</span></div>
+            <div class="dz-vital"><span class="dz-vk">BP</span><span id="dz-bp" class="dz-vv">—</span></div>
+            <div class="dz-vital"><span class="dz-vk">SpO₂</span><span id="dz-spo2" class="dz-vv">—</span></div>
+            <div class="dz-vital"><span class="dz-vk">ECG</span><span id="dz-ecg" class="dz-vv">—</span></div>
+        </div>
+    </div>
 
     <section id="info" class="info-card"></section>
     <div id="tooltip"></div>

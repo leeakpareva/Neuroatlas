@@ -7,16 +7,16 @@
   },
   "headers": [
     {
+      "source": "/(.*).(glb|gltf|bin|wasm|png|jpg|jpeg|webp|gif|woff2|woff|ico)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    },
+    {
+      "source": "/(.*).(js|css|html|json|webmanifest)",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache, must-revalidate" }]
+    },
+    {
       "source": "/",
       "headers": [{ "key": "Cache-Control", "value": "no-cache, must-revalidate" }]
-    },
-    {
-      "source": "/index.html",
-      "headers": [{ "key": "Cache-Control", "value": "no-cache, must-revalidate" }]
-    },
-    {
-      "source": "/(.*).(js|css|png|jpg|glb|gltf|bin|wasm|woff2)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
     }
   ]
 }
