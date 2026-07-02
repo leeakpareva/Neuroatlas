@@ -1,0 +1,38 @@
+/* NAVADA SkeletonAtlas — skeleton theme.
+   Loads after style.css and re-tints the cyan brain palette to a warm bone gold.
+   A skeleton and skull share the bone aesthetic, so the gold accent is kept.
+   Most of the UI reads var(--accent); the rules below cover the spots that
+   hard-coded the cyan value. */
+
+body.skeleton {
+    --accent: #e3c178;
+    --errp:   #f0d28a;
+    --bg:     #0a0a0c;
+}
+
+body.skeleton #viewer-container {
+    background: radial-gradient(circle at 58% 40%, #1c1710 0%, #0a0a0c 70%);
+}
+
+body.skeleton .nav-tab.active {
+    background: linear-gradient(135deg, rgba(227,193,120,.18), rgba(227,193,120,.03));
+}
+body.skeleton .list-item.active {
+    background: rgba(227,193,120,.14);
+    box-shadow: inset 0 0 0 1px rgba(227,193,120,.42);
+}
+body.skeleton .btn:hover {
+    box-shadow: 0 0 0 1px rgba(227,193,120,.25), 0 6px 18px -8px rgba(227,193,120,.5);
+}
+body.skeleton .msg.user { background: rgba(227,193,120,.12); border-color: rgba(227,193,120,.3); }
+body.skeleton .btn-send { background: linear-gradient(135deg, #f0d693, #c79b3e); color: #2a1f08; }
+body.skeleton .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(227,193,120,.8); }
+body.skeleton #leader-line { filter: drop-shadow(0 0 4px rgba(227,193,120,.45)); }
+body.skeleton #mobile-agent {
+    background: linear-gradient(135deg, #f0d693, #c79b3e); color: #2a1f08;
+    box-shadow: 0 8px 22px -6px rgba(227,193,120,.7);
+}
+body.skeleton #mobile-rotate.active {
+    background: linear-gradient(135deg, #f0d693, #c79b3e); color: #2a1f08;
+    box-shadow: 0 8px 22px -6px rgba(227,193,120,.7);
+}

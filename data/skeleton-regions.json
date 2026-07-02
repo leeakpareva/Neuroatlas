@@ -1,0 +1,56 @@
+{
+  "Skull": {
+    "name": "Skull",
+    "system": "Axial skeleton",
+    "color": "#f5a029",
+    "function": "The 22 bones of the head — the domed braincase and the facial skeleton. It armours the brain, houses the eyes, inner ears and nasal cavity, and its only moving bone, the mandible, lets you chew and speak."
+  },
+  "Spine": {
+    "name": "Spine (Vertebral Column)",
+    "system": "Axial skeleton",
+    "color": "#f472b6",
+    "function": "A stacked chain of 33 vertebrae running neck to tailbone. It holds the body upright, carries its weight to the pelvis, and forms a bony tunnel that protects the spinal cord while staying flexible enough to bend and twist."
+  },
+  "Ribcage": {
+    "name": "Ribcage",
+    "system": "Axial skeleton",
+    "color": "#418ce0",
+    "function": "Twelve pairs of curved ribs sweeping from the spine around the chest. This springy cage shields the heart and lungs and moves up and out with every breath, drawing air into the lungs."
+  },
+  "Sternum": {
+    "name": "Sternum (Breastbone)",
+    "system": "Axial skeleton",
+    "color": "#22c3b8",
+    "function": "The flat dagger-shaped bone down the centre of the chest. Most of the ribs anchor to it through costal cartilage, closing the front of the ribcage and giving the collarbones a firm central attachment."
+  },
+  "Shoulders & arms": {
+    "name": "Shoulders & Arms",
+    "system": "Appendicular skeleton",
+    "color": "#9d6bea",
+    "function": "The collarbones and shoulder blades that hang the arms from the trunk, plus the humerus of the upper arm and the radius and ulna of the forearm. Together they give the arm its huge, mobile reach for lifting, throwing and carrying."
+  },
+  "Hands": {
+    "name": "Hands",
+    "system": "Appendicular skeleton",
+    "color": "#35d07f",
+    "function": "Twenty-seven small bones in each hand — the wrist carpals, the palm metacarpals and the finger phalanges. Their many joints, and the opposable thumb, give the precise, powerful grip that defines human dexterity."
+  },
+  "Pelvis": {
+    "name": "Pelvis",
+    "system": "Appendicular skeleton",
+    "color": "#e0454a",
+    "function": "A sturdy basin of fused hip bones joined to the sacrum. It transfers the weight of the upper body onto the legs, anchors powerful hip and thigh muscles, and cradles and protects the bladder and reproductive organs."
+  },
+  "Legs": {
+    "name": "Legs",
+    "system": "Appendicular skeleton",
+    "color": "#f7d017",
+    "function": "The femur of the thigh — the longest, strongest bone in the body — with the kneecap, and the tibia and fibula of the lower leg. They bear the body's full weight and drive standing, walking, running and jumping."
+  },
+  "Feet": {
+    "name": "Feet",
+    "system": "Appendicular skeleton",
+    "color": "#f97316",
+    "function": "Twenty-six bones in each foot — the ankle and heel tarsals, the metatarsals and the toe phalanges. Arched like a bridge, they absorb impact, balance the body and spring you forward with each step."
+  }
+}

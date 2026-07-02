@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NAVADA NeuroAtlas — Interactive Brain</title>
+
+    <!-- PWA / mobile-app behaviour -->
+    <meta name="theme-color" content="#07090d">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NeuroAtlas">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="css/style.css?v=20260702-9">
+</head>
+<body>
+    <header id="topbar">
+        <div class="brand-wrap">
+            <div class="brand">
+                <span class="brand-mark">NAVADA</span>
+                <span class="brand-sub">Atlas</span>
+            </div>
+                                    <nav class="organ-switch">
+                <a href="index.html" title="Full human skeleton">🩻 Skeleton</a>
+                <a href="brain.html" class="active" title="Brain atlas (NeuroAtlas)">🧠 Brain</a>
+                <a href="heart.html" title="Heart atlas">🫀 Heart</a>
+                <a href="lungs.html" title="Lungs atlas">🫁 Lungs</a>
+                <a href="eye.html" title="Eye atlas">👁️ Eye</a>
+                <a href="ear.html" title="Ear atlas">👂 Ear</a>
+                <a href="gluco.html" title="Glucose / metabolism atlas">🍔 Gluco</a>
+                <a href="gut.html" title="Gut / large intestine atlas">🌀 Gut</a>
+                <a href="molecule.html" title="Molecular atlas — proteins, pathogens, cures">🧬 Molecules</a>
+                <a href="skull.html" title="Skull atlas">💀 Skull</a>
+                <a href="kidney.html" title="Kidney & urinary atlas">🫘 Kidney</a>
+                <a href="larynx.html" title="Larynx / voice box atlas">🗣️ Larynx</a>
+                <a href="spine.html" title="Vertebral column atlas">🦴 Spine</a>
+            </nav>
+        </div>
+        <div class="brand-tag">NAVADA_9 — your brain, in the loop</div>
+    </header>
+
+    <button id="reopen" title="Show panel">☰ Controls</button>
+
+    <!-- mobile-only floating controls (left edge) -->
+    <div id="mobile-explode">
+        <input id="mexplode" type="range" min="0" max="100" value="0">
+        <span class="mx-label">EXPLODE</span>
+    </div>
+    <button id="mobile-agent" title="Ask the AI tutor">AI</button>
+    <button id="mobile-rotate" title="Auto-rotate" aria-label="Auto-rotate">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <polyline points="21 3 21 9 15 9"></polyline>
+        </svg>
+    </button>
+
+    <aside id="panel">
+        <button id="collapse-btn" title="Hide panel">⟨</button>
+
+        <nav class="panel-nav">
+            <button id="nav-atlas" class="nav-tab active">Atlas</button>
+            <button id="nav-about" class="nav-tab">About</button>
+        </nav>
+
+        <!-- ATLAS view -->
+        <div id="atlas-view">
+        <div class="p-section" id="sec-regions">
+            <div class="p-title">Regions</div>
+            <input id="search" class="search" type="text" placeholder="Search a region…">
+            <div id="region-list" class="region-list"></div>
+        </div>
+
+        <div class="p-section" id="sec-explore">
+            <div class="p-title">Explore</div>
+            <label class="ctl">
+                <span>Explode / assemble</span>
+                <input id="explode" type="range" min="0" max="100" value="0">
+            </label>
+            <label class="ctl-row"><input id="reveal" type="checkbox"> Reveal deep structures (X-ray)</label>
+            <label class="ctl-row"><input id="autorotate" type="checkbox"> Auto-rotate</label>
+            <label class="ctl-row"><input id="show-axes" type="checkbox"> Show axes (X / Y / Z)</label>
+            <label class="ctl-row"><input id="show-grid" type="checkbox"> Show grid</label>
+            <button id="reset" class="btn">Reset view</button>
+        </div>
+
+        <div class="p-section">
+            <div class="p-title">Brain states · concept</div>
+            <div id="scenarios" class="scenarios"></div>
+        </div>
+
+        <div class="p-section">
+            <div class="p-title">Everyday activities</div>
+            <div id="activities" class="activity-grid"></div>
+            <p id="scn-desc" class="scn-desc"></p>
+            <div id="legend" class="legend">
+                <span>Suppressed</span><div class="legend-bar"></div><span>Overactive</span>
+            </div>
+        </div>
+
+        <div class="p-section" id="sec-telemetry">
+            <div class="p-title">Live telemetry</div>
+            <canvas id="telemetry" class="telemetry"></canvas>
+            <div class="tele-label">System activity</div>
+            <canvas id="sysbars" class="bands"></canvas>
+            <div class="tele-label">Frequency bands · δ θ α β γ</div>
+            <canvas id="bands" class="bands"></canvas>
+            <div class="tele-readouts">
+                <div class="tele-cell"><span class="tele-k">ErrP</span><span id="tele-status" class="tele-status">monitoring</span></div>
+                <div class="tele-cell"><span class="tele-k">Confidence</span><span id="tele-conf" class="tele-v">4.0%</span></div>
+                <div class="tele-cell"><span class="tele-k">Latency</span><span id="tele-lat" class="tele-v">—</span></div>
+            </div>
+        </div>
+
+        <div class="p-section" id="sec-tutor">
+            <div class="p-title">NAVADA AI Doc <span id="tutor-status" class="tutor-status">…</span></div>
+            <div id="tutor-log" class="tutor-log"></div>
+            <div class="tutor-input">
+                <input id="tutor-text" type="text" placeholder="Ask about the brain…">
+                <button id="tutor-send" class="btn-send">↑</button>
+            </div>
+        </div>
+
+        <div class="p-foot">
+            Anatomy: Z-Anatomy (CC BY-SA 4.0) · BodyParts3D<br>
+            © NAVADA Edge Network
+        </div>
+        </div><!-- /atlas-view -->
+
+        <!-- ABOUT view -->
+        <div id="about-view" hidden>
+            <div class="about-hero">
+                <div class="about-mark">NAVADA<span>_9</span></div>
+                <div class="about-title">NeuroAtlas</div>
+                <p class="about-lead">An interactive 3D brain you can explore, label and simulate — and the first organ in what is becoming a personal health simulator. Built around the NAVADA_9 wearable-neurotechnology research concept.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>What it is</h4>
+                <p>A real, anatomically segmented human brain you can rotate, take apart and study. Each region is individually labelled with its name and function, and you can simulate how brain activity changes across everyday and clinical states.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>How to use it</h4>
+                <ul>
+                    <li><b>Select</b> — click any region (or pick from the list) to see its name, system and function, with a coloured leader-line callout.</li>
+                    <li><b>Explore</b> — use the explode slider to pull the brain apart, X-ray to reveal deep structures, and toggle axes/grid.</li>
+                    <li><b>Activity</b> — choose a brain state or everyday activity; involved regions flash and a live heatmap shows what's suppressed or overactive.</li>
+                    <li><b>Telemetry</b> — watch a simulated EEG/ErrP trace, neural frequency bands and per-system activity update in real time.</li>
+                    <li><b>NAVADA AI Doc</b> — ask anything; it knows what you've selected and teaches you more.</li>
+                </ul>
+            </div>
+
+            <div class="about-block">
+                <h4>The NAVADA_9 concept</h4>
+                <p>NAVADA_9 is a wearable earpiece that reads the brain's involuntary error-related potential (ErrP) — generated in the anterior cingulate — from behind the ear, and feeds it back to an AI in real time. The machine acts, the brain reacts, the AI adjusts: a closed loop running at the speed of thought.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>Where this is heading</h4>
+                <p>NAVADA NeuroAtlas is growing into a personal health simulator: load your own data from everyday devices and replay it on the 3D model, so you can see how your body behaved over time and talk it through with doctors and other healthcare professionals.</p>
+                <p>Reading brain signals needs the NAVADA_9 EEG earpiece, which is still in the research phase — so brain data here is simulated for now, while the heart and lungs can already use real wearable data.</p>
+            </div>
+
+            <div class="about-block">
+                <h4>Data &amp; technology</h4>
+                <ul>
+                    <li><b>Anatomy</b> — Z-Anatomy (CC BY-SA 4.0) / BodyParts3D, 32 curated structures</li>
+                    <li><b>3D engine</b> — Three.js / WebGL</li>
+                    <li><b>NAVADA AI Doc</b> — NVIDIA NIM · Llama 3.3 70B</li>
+                    <li><b>Your data</b> — EEG via NAVADA_9 earpiece (research phase)</li>
+                </ul>
+                <p class="about-disclaimer">An educational and visualisation aid to support conversations with healthcare professionals — not a medical device and not for diagnosis. Simulations are scientifically-informed dramatisations shown until your own data is loaded.</p>
+            </div>
+
+            <div class="about-credit">
+                Designed &amp; developed by<br><b>Lee Akpareva, MBA, MA</b><br>
+                <span>PhD Researcher · Wearable Neurotechnology<br>Brunel University of London</span>
+            </div>
+        </div><!-- /about-view -->
+    </aside>
+
+    <section id="info" class="info-card"></section>
+    <div id="tooltip"></div>
+
+    <!-- anatomical leader-line callout for the selected part -->
+    <svg id="leader-svg">
+        <line id="leader-line" x1="0" y1="0" x2="0" y2="0"></line>
+        <circle id="leader-dot" r="3.5"></circle>
+    </svg>
+    <div id="leader-label"></div>
+
+    <footer id="credit">
+        <span class="credit-main">Designed &amp; developed by <strong>Lee Akpareva</strong>, MBA, MA</span>
+        <span class="credit-sub">PhD Researcher · Wearable Neurotechnology · Brunel University of London</span>
+    </footer>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading NAVADA NeuroAtlas…</p>
+    </div>
+
+    <div id="viewer-container"></div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <!-- mobile: swipe through each 3D part -->
+    <div id="parts-rail" class="parts-rail" aria-label="Body parts">
+        <button class="pr-step pr-prev" type="button" aria-label="Previous part">‹</button>
+        <div class="pr-track"></div>
+        <button class="pr-step pr-next" type="button" aria-label="Next part">›</button>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/modules/MobilePartsRail.js?v=20260702-6"></script>
+    <script type="module" src="js/modules/AppChrome.js?v=20260702-9"></script>
+    <script type="module" src="js/modules/GuidedTour.js?v=20260702-7"></script>
+</body>
+</html>
