@@ -1,7 +1,7 @@
 /**
  * AppChrome — shared app-shell extras for every NAVADA Atlas page.
  *
- *  1. Splash cover: a one-per-session "NEUROATLAS" title that fades into the app.
+ *  1. Splash cover: a one-per-session "NAVADA ATLAS" title that fades into the app.
  *  2. Background switcher: black / white / pink / blue, applied to the page, the
  *     Three.js scene (organ pages) and the 3Dmol viewer (molecule page), and
  *     remembered across visits.
@@ -105,7 +105,7 @@ function splash() {
     if (shown) return;
     const el = document.createElement('div');
     el.id = 'splash';
-    el.innerHTML = '<span class="splash-word">NEUROATLAS</span>';
+    el.innerHTML = '<span class="splash-mark">NAVADA</span><span class="splash-word">ATLAS</span>';
     document.body.appendChild(el);
     requestAnimationFrame(() => el.classList.add('in'));
     setTimeout(() => el.classList.add('hide'), 1400);

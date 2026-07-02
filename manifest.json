@@ -1,7 +1,7 @@
 {
-  "name": "NAVADA NeuroAtlas",
-  "short_name": "NeuroAtlas",
-  "description": "Interactive 3D brain learning platform — part of NAVADA_9 wearable neurotechnology research.",
+  "name": "NAVADA Atlas",
+  "short_name": "NAVADA Atlas",
+  "description": "Interactive 3D human-body learning platform — organs, systems and molecules in 3D with an AI tutor and narrated tours. By NAVADA.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
