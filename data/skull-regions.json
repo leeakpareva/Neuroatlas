@@ -1,0 +1,98 @@
+{
+  "Frontal bone": {
+    "name": "Frontal Bone",
+    "system": "Neurocranium (braincase)",
+    "color": "#f59e0b",
+    "function": "Forms the forehead and the roof of the eye sockets. As a baby it is two halves that fuse down the middle, and it protects the front of the brain."
+  },
+  "Parietal bone": {
+    "name": "Parietal Bones",
+    "system": "Neurocranium (braincase)",
+    "color": "#f472b6",
+    "function": "The pair of bones that make up most of the top and sides of the skull, like two curved plates roofing the brain. They meet in the middle at the sagittal suture."
+  },
+  "Temporal bone": {
+    "name": "Temporal Bones",
+    "system": "Neurocranium (braincase)",
+    "color": "#a78bfa",
+    "function": "Sit at the sides and base of the skull, around the ears. They house the hearing and balance organs and form the socket where the lower jaw hinges."
+  },
+  "Occipital bone": {
+    "name": "Occipital Bone",
+    "system": "Neurocranium (braincase)",
+    "color": "#34d399",
+    "function": "The back and base of the skull. Its large hole (the foramen magnum) is where the brainstem joins the spinal cord, and it rests on the first neck vertebra."
+  },
+  "Sphenoid bone": {
+    "name": "Sphenoid Bone",
+    "system": "Neurocranium (braincase)",
+    "color": "#60a5fa",
+    "function": "A butterfly-shaped bone wedged across the base of the skull that helps tie all the other cranial bones together. It cradles the pituitary gland in a tiny saddle."
+  },
+  "Ethmoid bone": {
+    "name": "Ethmoid Bone",
+    "system": "Neurocranium (braincase)",
+    "color": "#f87171",
+    "function": "A light, spongy bone between the eyes that forms part of the nasal cavity and eye sockets. Its tiny holes let the smell nerves pass up to the brain."
+  },
+  "Nasal bone": {
+    "name": "Nasal Bones",
+    "system": "Facial skeleton",
+    "color": "#fbbf24",
+    "function": "The two small bones that form the bridge of the nose. Below them the nose is shaped by flexible cartilage, which is why the tip is soft."
+  },
+  "Lacrimal bone": {
+    "name": "Lacrimal Bones",
+    "system": "Facial skeleton",
+    "color": "#22d3ee",
+    "function": "The smallest, most fragile bones of the face, in the inner wall of each eye socket. They carry the groove that drains tears from the eye into the nose."
+  },
+  "Zygomatic bone": {
+    "name": "Zygomatic Bones (cheekbones)",
+    "system": "Facial skeleton",
+    "color": "#fb7185",
+    "function": "The cheekbones. They give the face its width below the eyes and form part of the eye socket, joining the temporal bone to make the cheek arch."
+  },
+  "Maxilla": {
+    "name": "Maxilla (upper jaw)",
+    "system": "Facial skeleton",
+    "color": "#4ade80",
+    "function": "The upper jaw — two fused bones that hold the upper teeth, form the roof of the mouth and the floor of the nose, and support the middle of the face."
+  },
+  "Palatine bone": {
+    "name": "Palatine Bones",
+    "system": "Facial skeleton",
+    "color": "#c084fc",
+    "function": "L-shaped bones tucked behind the maxilla that complete the hard palate at the back of the roof of the mouth and part of the nasal cavity."
+  },
+  "Vomer": {
+    "name": "Vomer",
+    "system": "Facial skeleton",
+    "color": "#38bdf8",
+    "function": "A thin, flat bone that forms the lower part of the nasal septum — the wall dividing the two nostrils."
+  },
+  "Inferior nasal concha bone": {
+    "name": "Inferior Nasal Conchae",
+    "system": "Facial skeleton",
+    "color": "#facc15",
+    "function": "Scroll-shaped bones on the side walls of the nose that swirl the air you breathe in, warming and humidifying it before it reaches the lungs."
+  },
+  "Mandible": {
+    "name": "Mandible (lower jaw)",
+    "system": "Jaw & teeth",
+    "color": "#2dd4bf",
+    "function": "The lower jaw — the only bone of the skull that moves freely. It holds the lower teeth and hinges at the temporal bone so you can chew and speak."
+  },
+  "Teeth": {
+    "name": "Teeth",
+    "system": "Jaw & teeth",
+    "color": "#f3ecd6",
+    "function": "The hardest tissue in the body, set into the upper and lower jaws. Incisors cut, canines tear, and premolars and molars grind food before swallowing."
+  },
+  "Hyoid bone": {
+    "name": "Hyoid Bone",
+    "system": "Neck",
+    "color": "#94a3b8",
+    "function": "A small U-shaped bone in the neck that does not touch any other bone — it floats, anchored only by muscles. It supports the tongue and helps you swallow and speak."
+  }
+}

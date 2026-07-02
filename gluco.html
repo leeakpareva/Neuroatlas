@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20260702-8">
     <link rel="stylesheet" href="css/gluco.css">
 </head>
 <body class="gluco">
@@ -24,7 +24,7 @@
                 <span class="brand-mark">NAVADA</span>
                 <span class="brand-sub">NeuroAtlas</span>
             </div>
-            <nav class="organ-switch">
+                        <nav class="organ-switch">
                 <a href="index.html" title="Brain atlas">🧠 Brain</a>
                 <a href="heart.html" title="Heart atlas">🫀 Heart</a>
                 <a href="lungs.html" title="Lungs atlas">🫁 Lungs</a>
@@ -32,6 +32,12 @@
                 <a href="ear.html" title="Ear atlas">👂 Ear</a>
                 <a href="gluco.html" class="active" title="Glucose / metabolism atlas">🍔 Gluco</a>
                 <a href="gut.html" title="Gut / large intestine atlas">🌀 Gut</a>
+                <a href="molecule.html" title="Molecular atlas — proteins, pathogens, cures">🧬 Molecules</a>
+                <a href="skull.html" title="Skull atlas">💀 Skull</a>
+                <a href="kidney.html" title="Kidney & urinary atlas">🫘 Kidney</a>
+                <a href="larynx.html" title="Larynx / voice box atlas">🗣️ Larynx</a>
+                <a href="spine.html" title="Vertebral column atlas">🦴 Spine</a>
+                <a href="knee.html" title="Knee joint atlas">🦵 Knee</a>
             </nav>
         </div>
         <div class="brand-tag">NAVADA Atlas — your blood sugar, in balance</div>
@@ -199,6 +205,16 @@
         }
     }
     </script>
+    <!-- mobile: swipe through each 3D part -->
+    <div id="parts-rail" class="parts-rail" aria-label="Body parts">
+        <button class="pr-step pr-prev" type="button" aria-label="Previous part">‹</button>
+        <div class="pr-track"></div>
+        <button class="pr-step pr-next" type="button" aria-label="Next part">›</button>
+    </div>
+
     <script type="module" src="js/gluco.js"></script>
+    <script type="module" src="js/modules/MobilePartsRail.js?v=20260702-6"></script>
+    <script type="module" src="js/modules/AppChrome.js?v=20260702-4"></script>
+    <script type="module" src="js/modules/GuidedTour.js?v=20260702-7"></script>
 </body>
 </html>

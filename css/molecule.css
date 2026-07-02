@@ -1,0 +1,72 @@
+/* NAVADA MolecularAtlas — molecular theme.
+   Loads after style.css and re-tints the cyan brain palette to a bio-violet.
+   Most of the UI reads var(--accent); the rules below cover the few molecular
+   extras (category badges, structure dots) this page adds. */
+
+body.molecular {
+    --accent: #9b8cff;
+    --errp:   #c084fc;
+    --bg:     #08060d;
+}
+
+/* 3Dmol injects its own canvas; make sure the shared container is a sized,
+   positioned, full-screen stage behind the panel. */
+body.molecular #viewer-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle at 60% 38%, #14102a 0%, #08060d 70%);
+}
+/* 3Dmol's own canvas wrapper */
+body.molecular #viewer-container canvas { display: block; }
+
+/* accent re-tints (mirror of the organ theme files) */
+body.molecular .nav-tab.active {
+    background: linear-gradient(135deg, rgba(155,140,255,.18), rgba(155,140,255,.03));
+}
+body.molecular .list-item.active {
+    background: rgba(155,140,255,.14);
+    box-shadow: inset 0 0 0 1px rgba(155,140,255,.42);
+}
+body.molecular .act-btn:hover { box-shadow: 0 8px 20px -12px rgba(155,140,255,.6); }
+body.molecular .act-btn.active {
+    background: linear-gradient(135deg, rgba(155,140,255,.16), rgba(155,140,255,.02));
+    box-shadow: inset 0 0 0 1px rgba(155,140,255,.3);
+}
+body.molecular .scn-desc { border-left-color: rgba(155,140,255,.45); }
+body.molecular .btn:hover {
+    box-shadow: 0 0 0 1px rgba(155,140,255,.25), 0 6px 18px -8px rgba(155,140,255,.5);
+}
+body.molecular .msg.user { background: rgba(155,140,255,.12); border-color: rgba(155,140,255,.3); }
+body.molecular .btn-send { background: linear-gradient(135deg, #b4a6ff, #7c5cff); color: #100a26; }
+body.molecular .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(155,140,255,.8); }
+body.molecular #mobile-agent {
+    background: linear-gradient(135deg, #b4a6ff, #7c5cff); color: #100a26;
+    box-shadow: 0 8px 22px -6px rgba(155,140,255,.7);
+}
+
+/* structure / site list items */
+body.molecular .list-item {
+    display: flex; align-items: center; gap: 9px;
+    width: 100%; text-align: left; cursor: pointer;
+    padding: 9px 11px; margin: 3px 0; border-radius: 10px;
+    font: inherit; font-size: 13px; color: #e8e4ff;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    transition: background .18s, box-shadow .18s, border-color .18s;
+}
+body.molecular .list-item:hover { background: rgba(155,140,255,.1); }
+body.molecular .li-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+body.molecular .li-name { flex: 1; }
+body.molecular .li-cat {
+    font-size: 9px; letter-spacing: .5px; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 999px; flex: none;
+    border: 1px solid rgba(255,255,255,.12); color: rgba(232,228,255,.75);
+}
+body.molecular .li-cat.cat-pathogen { color: #fca5a5; border-color: rgba(239,68,68,.4); background: rgba(239,68,68,.08); }
+body.molecular .li-cat.cat-cure     { color: #d8b4fe; border-color: rgba(168,85,247,.4); background: rgba(168,85,247,.08); }
+body.molecular .li-cat.cat-drug     { color: #7dd3fc; border-color: rgba(56,189,248,.4); background: rgba(56,189,248,.08); }
+body.molecular .li-cat.cat-protein  { color: #86efac; border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.08); }
+
+/* the style buttons sit in a compact grid */
+body.molecular #style-buttons { grid-template-columns: repeat(3, 1fr); gap: 6px; }

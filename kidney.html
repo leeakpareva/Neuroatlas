@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>NAVADA OptosAtlas — Interactive Eye</title>
+    <title>NAVADA RenalAtlas — Interactive Kidney &amp; Urinary System</title>
 
-    <meta name="theme-color" content="#0a0810">
+    <meta name="theme-color" content="#0c0606">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="OptosAtlas">
+    <meta name="apple-mobile-web-app-title" content="RenalAtlas">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
 
     <link rel="stylesheet" href="css/style.css?v=20260702-8">
-    <link rel="stylesheet" href="css/eye.css">
+    <link rel="stylesheet" href="css/kidney.css">
 </head>
-<body class="eye">
+<body class="kidney">
     <header id="topbar">
         <div class="brand-wrap">
             <div class="brand">
@@ -28,19 +28,19 @@
                 <a href="index.html" title="Brain atlas">🧠 Brain</a>
                 <a href="heart.html" title="Heart atlas">🫀 Heart</a>
                 <a href="lungs.html" title="Lungs atlas">🫁 Lungs</a>
-                <a href="eye.html" class="active" title="Eye atlas">👁️ Eye</a>
+                <a href="eye.html" title="Eye atlas">👁️ Eye</a>
                 <a href="ear.html" title="Ear atlas">👂 Ear</a>
                 <a href="gluco.html" title="Glucose / metabolism atlas">🍔 Gluco</a>
                 <a href="gut.html" title="Gut / large intestine atlas">🌀 Gut</a>
                 <a href="molecule.html" title="Molecular atlas — proteins, pathogens, cures">🧬 Molecules</a>
                 <a href="skull.html" title="Skull atlas">💀 Skull</a>
-                <a href="kidney.html" title="Kidney & urinary atlas">🫘 Kidney</a>
+                <a href="kidney.html" class="active" title="Kidney & urinary atlas">🫘 Kidney</a>
                 <a href="larynx.html" title="Larynx / voice box atlas">🗣️ Larynx</a>
                 <a href="spine.html" title="Vertebral column atlas">🦴 Spine</a>
                 <a href="knee.html" title="Knee joint atlas">🦵 Knee</a>
             </nav>
         </div>
-        <div class="brand-tag">NAVADA Atlas — your eye, in focus</div>
+        <div class="brand-tag">NAVADA Atlas — the kidney &amp; urinary system</div>
     </header>
 
     <button id="reopen" title="Show panel">☰ Controls</button>
@@ -56,6 +56,13 @@
             <polyline points="21 3 21 9 15 9"></polyline>
         </svg>
     </button>
+
+    <!-- mobile: swipe through each 3D part -->
+    <div id="parts-rail" class="parts-rail" aria-label="Body parts">
+        <button class="pr-step pr-prev" type="button" aria-label="Previous part">‹</button>
+        <div class="pr-track"></div>
+        <button class="pr-step pr-next" type="button" aria-label="Next part">›</button>
+    </div>
 
     <aside id="panel">
         <button id="collapse-btn" title="Hide panel">⟨</button>
@@ -78,47 +85,18 @@
                 <span>Explode / assemble</span>
                 <input id="explode" type="range" min="0" max="100" value="0">
             </label>
-            <label class="ctl-row"><input id="reveal" type="checkbox"> Reveal iris &amp; lens (X-ray)</label>
+            <label class="ctl-row"><input id="reveal" type="checkbox"> Reveal renal pelvis (X-ray cortex)</label>
             <label class="ctl-row"><input id="autorotate" type="checkbox"> Auto-rotate</label>
             <label class="ctl-row"><input id="show-axes" type="checkbox"> Show axes (X / Y / Z)</label>
             <label class="ctl-row"><input id="show-grid" type="checkbox"> Show grid</label>
             <button id="reset" class="btn">Reset view</button>
         </div>
 
-        <div class="p-section">
-            <div class="p-title">Pupil &amp; focus · states</div>
-            <div id="scenarios" class="scenarios"></div>
-        </div>
-
-        <div class="p-section">
-            <div class="p-title">Eye movements</div>
-            <div id="activities" class="activity-grid"></div>
-            <p id="scn-desc" class="scn-desc"></p>
-            <div id="legend" class="legend">
-                <span>Quiet</span><div class="legend-bar"></div><span>Working hard</span>
-            </div>
-        </div>
-
-        <div class="p-section" id="sec-telemetry">
-            <div class="p-title">Live telemetry <span id="tele-status" class="tele-status">relaxed</span></div>
-            <canvas id="telemetry" class="telemetry"></canvas>
-            <div class="tele-label">Pupillometry · diameter</div>
-            <canvas id="sysbars" class="bands"></canvas>
-            <div class="tele-label">System activity</div>
-            <canvas id="bands" class="bands"></canvas>
-            <div class="tele-label">Eye-muscle tone · SR IR LR MR SO IO</div>
-            <div class="tele-readouts">
-                <div class="tele-cell"><span class="tele-k">Pupil</span><span id="tele-pupil" class="tele-v">3.8 mm</span></div>
-                <div class="tele-cell"><span class="tele-k">Light</span><span id="tele-light" class="tele-v">normal</span></div>
-                <div class="tele-cell"><span class="tele-k">Focus</span><span id="tele-focus" class="tele-v">far</span></div>
-            </div>
-        </div>
-
         <div class="p-section" id="sec-tutor">
             <div class="p-title">NAVADA AI Doc <span id="tutor-status" class="tutor-status">…</span></div>
             <div id="tutor-log" class="tutor-log"></div>
             <div class="tutor-input">
-                <input id="tutor-text" type="text" placeholder="Ask about the eye…">
+                <input id="tutor-text" type="text" placeholder="Ask about the kidney…">
                 <button id="tutor-send" class="btn-send">↑</button>
             </div>
         </div>
@@ -132,43 +110,31 @@
         <div id="about-view" hidden>
             <div class="about-hero">
                 <div class="about-mark">NAVADA<span>·</span></div>
-                <div class="about-title">OptosAtlas</div>
-                <p class="about-lead">An interactive 3D eye you can explore, take apart and watch react to light — and part of a personal health simulator that can replay your own vision data on the model.</p>
+                <div class="about-title">RenalAtlas</div>
+                <p class="about-lead">A real kidney and urinary system you can rotate, take apart and see through — the organs that filter your blood, balance your body chemistry and carry waste away.</p>
             </div>
-
             <div class="about-block">
                 <h4>What it is</h4>
-                <p>A real, anatomically segmented human eye you can rotate, explode and study. The cornea, iris, lens, the chambers of the eyeball and all six muscles that move it are individually labelled with their name and function, and you can simulate how the eye responds to light, focus and gaze.</p>
+                <p>An anatomically segmented kidney and urinary tract built from the Z-Anatomy atlas. The kidney, the renal pelvis that collects its urine, the adrenal gland riding on top and the bladder that stores the finished urine are each individually coloured, labelled and explained. Explode it to separate the parts, or X-ray the kidney cortex to see the renal pelvis tucked deep inside.</p>
             </div>
-
             <div class="about-block">
                 <h4>How to use it</h4>
                 <ul>
                     <li><b>Select</b> — click any part (or pick from the list) to see its name, system and function, with a coloured leader-line callout.</li>
-                    <li><b>Explore</b> — use the explode slider to pull the eye apart, X-ray to fade the globe and reveal the iris &amp; lens inside, and toggle axes/grid.</li>
-                    <li><b>States</b> — choose a pupil/focus state (bright light, darkness, near focus) or an eye movement (look left/right/up/down, reading); involved parts flash and the eyeball turns to follow your gaze.</li>
-                    <li><b>Telemetry</b> — watch live pupillometry, per-system activity and eye-muscle tone update in real time, with pupil diameter, light level and focus.</li>
-                    <li><b>NAVADA AI Doc</b> — ask anything; it knows what you've selected and teaches you more.</li>
+                    <li><b>Explode</b> — use the slider to separate the kidney, pelvis, adrenal gland and bladder, then assemble them again.</li>
+                    <li><b>X-ray</b> — fade the kidney body to reveal the renal pelvis collecting urine inside.</li>
+                    <li><b>NAVADA AI Doc</b> — ask anything; it knows which part you've selected and teaches you more.</li>
                 </ul>
             </div>
-
-            <div class="about-block">
-                <h4>Where this is heading</h4>
-                <p>NAVADA NeuroAtlas is growing into a personal health simulator. Vision data is increasingly captured by eye-tracking glasses, smartphone pupil tests and clinic instruments — so your own readings could be loaded and replayed here, for example to follow how your focus or pupil response changes over time.</p>
-                <p>The goal is a clear visual companion you can bring to appointments to talk through your eye health with optometrists and other healthcare professionals. It sits alongside the brain, heart and lungs in the wider NAVADA Atlas, all running on the same engine so new organs can be added as needed.</p>
-            </div>
-
             <div class="about-block">
                 <h4>Data &amp; technology</h4>
                 <ul>
-                    <li><b>Anatomy</b> — Z-Anatomy (CC BY-SA 4.0) / BodyParts3D, 12 curated ocular structures</li>
+                    <li><b>Anatomy</b> — Z-Anatomy (CC BY-SA 4.0) / BodyParts3D, curated kidney &amp; urinary parts</li>
                     <li><b>3D engine</b> — Three.js / WebGL</li>
                     <li><b>NAVADA AI Doc</b> — NVIDIA NIM · Llama 3.3 70B</li>
-                    <li><b>Your data</b> — eye-tracking glasses, smartphone pupil tests, clinic instruments</li>
                 </ul>
-                <p class="about-disclaimer">An educational and visualisation aid to support conversations with healthcare professionals — not a medical device and not for diagnosis. Pupillometry and muscle tone are scientifically-informed dramatisations shown until your own data is loaded.</p>
+                <p class="about-disclaimer">An educational and visualisation aid — not a medical device and not for diagnosis.</p>
             </div>
-
             <div class="about-credit">
                 Designed &amp; developed by<br><b>Lee Akpareva, MBA, MA</b><br>
                 <span>PhD Researcher · Wearable Neurotechnology<br>Brunel University of London</span>
@@ -192,7 +158,7 @@
 
     <div id="loading">
         <div class="spinner"></div>
-        <p>Loading NAVADA OptosAtlas…</p>
+        <p>Loading NAVADA RenalAtlas…</p>
     </div>
 
     <div id="viewer-container"></div>
@@ -205,14 +171,7 @@
         }
     }
     </script>
-    <!-- mobile: swipe through each 3D part -->
-    <div id="parts-rail" class="parts-rail" aria-label="Body parts">
-        <button class="pr-step pr-prev" type="button" aria-label="Previous part">‹</button>
-        <div class="pr-track"></div>
-        <button class="pr-step pr-next" type="button" aria-label="Next part">›</button>
-    </div>
-
-    <script type="module" src="js/eye.js"></script>
+    <script type="module" src="js/kidney.js"></script>
     <script type="module" src="js/modules/MobilePartsRail.js?v=20260702-6"></script>
     <script type="module" src="js/modules/AppChrome.js?v=20260702-4"></script>
     <script type="module" src="js/modules/GuidedTour.js?v=20260702-7"></script>

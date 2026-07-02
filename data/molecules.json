@@ -1,0 +1,46 @@
+{
+  "_comment": "NAVADA MolecularAtlas catalogue. Each entry is a real 3D structure loaded live from the Protein Data Bank (pdb) or PubChem (cid) by 3Dmol.js — no local model files. 'sites' are highlightable regions/residues. Generated/extended by the Claude Science 'neuroatlas-asset' skill.",
+  "structures": [
+    {
+      "id": "spike",
+      "name": "SARS-CoV-2 Spike Protein",
+      "category": "pathogen",
+      "source": { "type": "pdb", "id": "6VSB" },
+      "color": "#ef4444",
+      "defaultStyle": "cartoon",
+      "summary": "The spike (S) glycoprotein that studs the surface of the SARS-CoV-2 virus and lets it enter human cells. This is the prefusion trimer — three copies clasped together. The tip of one chain is flipped 'up', exposing the receptor-binding domain that grabs the human ACE2 receptor. It is the part most vaccines train your immune system to recognise.",
+      "sites": [
+        { "name": "Receptor-binding domain (RBD)", "sel": { "chain": "A", "resi": "319-541" }, "color": "#f59e0b", "function": "The hook that latches onto the human ACE2 receptor to start infection. It is the main target of neutralising antibodies and most vaccines." },
+        { "name": "N-terminal domain (NTD)", "sel": { "chain": "A", "resi": "14-305" }, "color": "#22d3ee", "function": "The leading edge of the spike. It helps the virus attach and is a hotspot where mutations change how the immune system sees the virus." }
+      ],
+      "citations": ["10.1126/science.abb2507"]
+    },
+    {
+      "id": "mpro-n3",
+      "name": "Main Protease + Inhibitor (a cure in action)",
+      "category": "cure",
+      "source": { "type": "pdb", "id": "6LU7" },
+      "color": "#a855f7",
+      "defaultStyle": "cartoon",
+      "hideWater": true,
+      "summary": "The SARS-CoV-2 main protease (Mpro), the molecular scissors the virus needs to mature and replicate. Here a drug-like inhibitor (N3) sits jammed inside the active site, blocking the scissors so the virus cannot copy itself. This is exactly the mechanism antiviral pills like Paxlovid use — and the template for designing one.",
+      "sites": [
+        { "name": "Bound inhibitor (N3)", "sel": { "hetflag": true, "byres": true }, "style": "stick", "color": "#34d399", "function": "The drug molecule wedged into the enzyme's mouth. By filling the active site it stops the protease from cutting viral proteins — halting replication." },
+        { "name": "Catalytic Cys145", "sel": { "chain": "A", "resi": "145" }, "style": "stick", "color": "#fbbf24", "function": "Half of the catalytic dyad — the reactive cysteine that does the cutting. The inhibitor forms a bond right here to disable it." },
+        { "name": "Catalytic His41", "sel": { "chain": "A", "resi": "41" }, "style": "stick", "color": "#60a5fa", "function": "The other half of the catalytic dyad. It primes the cysteine; block these two residues and the enzyme is dead." }
+      ],
+      "citations": ["10.1038/s41586-020-2223-y"]
+    },
+    {
+      "id": "aspirin",
+      "name": "Aspirin (small-molecule drug)",
+      "category": "drug",
+      "source": { "type": "cid", "id": "2244" },
+      "color": "#38bdf8",
+      "defaultStyle": "stick",
+      "summary": "Acetylsalicylic acid — aspirin — fetched straight from PubChem as a 3D conformer. A tiny molecule compared with a protein, it works by permanently acetylating the COX enzymes, dialling down the chemicals that cause pain, fever and clotting. A clean example of the 'cure' scale the atlas can render alongside its targets.",
+      "sites": [],
+      "citations": ["10.1038/231232a0"]
+    }
+  ]
+}

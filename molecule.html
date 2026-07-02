@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NAVADA MolecularAtlas — Proteins, Pathogens &amp; Cures</title>
+
+    <meta name="theme-color" content="#08060d">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MolecularAtlas">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="css/style.css?v=20260702-8">
+    <link rel="stylesheet" href="css/molecule.css">
+</head>
+<body class="molecular">
+    <header id="topbar">
+        <div class="brand-wrap">
+            <div class="brand">
+                <span class="brand-mark">NAVADA</span>
+                <span class="brand-sub">NeuroAtlas</span>
+            </div>
+                        <nav class="organ-switch">
+                <a href="index.html" title="Brain atlas">🧠 Brain</a>
+                <a href="heart.html" title="Heart atlas">🫀 Heart</a>
+                <a href="lungs.html" title="Lungs atlas">🫁 Lungs</a>
+                <a href="eye.html" title="Eye atlas">👁️ Eye</a>
+                <a href="ear.html" title="Ear atlas">👂 Ear</a>
+                <a href="gluco.html" title="Glucose / metabolism atlas">🍔 Gluco</a>
+                <a href="gut.html" title="Gut / large intestine atlas">🌀 Gut</a>
+                <a href="molecule.html" class="active" title="Molecular atlas — proteins, pathogens, cures">🧬 Molecules</a>
+                <a href="skull.html" title="Skull atlas">💀 Skull</a>
+                <a href="kidney.html" title="Kidney & urinary atlas">🫘 Kidney</a>
+                <a href="larynx.html" title="Larynx / voice box atlas">🗣️ Larynx</a>
+                <a href="spine.html" title="Vertebral column atlas">🦴 Spine</a>
+                <a href="knee.html" title="Knee joint atlas">🦵 Knee</a>
+            </nav>
+        </div>
+        <div class="brand-tag">NAVADA Atlas — proteins, pathogens &amp; cures in 3D</div>
+    </header>
+
+    <button id="reopen" title="Show panel">☰ Controls</button>
+    <button id="mobile-agent" title="Ask the AI tutor">AI</button>
+
+    <!-- mobile: swipe to browse structures, tap to load -->
+    <div id="parts-rail" class="parts-rail" aria-label="Structures">
+        <button class="pr-step pr-prev" type="button" aria-label="Previous structure">‹</button>
+        <div class="pr-track"></div>
+        <button class="pr-step pr-next" type="button" aria-label="Next structure">›</button>
+    </div>
+
+    <aside id="panel">
+        <button id="collapse-btn" title="Hide panel">⟨</button>
+
+        <nav class="panel-nav">
+            <button id="nav-atlas" class="nav-tab active">Atlas</button>
+            <button id="nav-about" class="nav-tab">About</button>
+        </nav>
+
+        <div id="atlas-view">
+        <div class="p-section" id="sec-structures">
+            <div class="p-title">Structures</div>
+            <div id="structure-list" class="region-list"></div>
+            <p id="struct-summary" class="scn-desc"></p>
+        </div>
+
+        <div class="p-section" id="sec-regions">
+            <div class="p-title">Sites &amp; regions <span id="sites-hint" class="tutor-status">—</span></div>
+            <div id="region-list" class="region-list"></div>
+        </div>
+
+        <div class="p-section" id="sec-display">
+            <div class="p-title">Display</div>
+            <div id="style-buttons" class="activity-grid"></div>
+            <label class="ctl-row"><input id="surface" type="checkbox"> Show molecular surface</label>
+            <label class="ctl-row"><input id="spin" type="checkbox"> Auto-spin</label>
+            <button id="reset" class="btn">Reset view</button>
+        </div>
+
+        <div class="p-section" id="sec-tutor">
+            <div class="p-title">NAVADA AI Doc <span id="tutor-status" class="tutor-status">…</span></div>
+            <div id="tutor-log" class="tutor-log"></div>
+            <div class="tutor-input">
+                <input id="tutor-text" type="text" placeholder="Ask about this molecule…">
+                <button id="tutor-send" class="btn-send">↑</button>
+            </div>
+        </div>
+
+        <div class="p-foot">
+            Structures: RCSB Protein Data Bank · PubChem<br>
+            © NAVADA Edge Network
+        </div>
+        </div><!-- /atlas-view -->
+
+        <div id="about-view" hidden>
+            <div class="about-hero">
+                <div class="about-mark">NAVADA<span>·</span></div>
+                <div class="about-title">MolecularAtlas</div>
+                <p class="about-lead">Real 3D structures of proteins, pathogens and the drugs that treat them — loaded live from the world's structural databases and explained as you explore.</p>
+            </div>
+            <div class="about-block">
+                <h4>What it is</h4>
+                <p>A molecular-scale companion to the NAVADA Atlas. Where the organ atlases show anatomy, this shows the machinery inside: viral proteins, enzymes and drug molecules, rendered in true 3D straight from the Protein Data Bank and PubChem. Pick a structure, highlight its working parts, and ask the tutor what each does.</p>
+            </div>
+            <div class="about-block">
+                <h4>How to use it</h4>
+                <ul>
+                    <li><b>Structure</b> — pick a protein, pathogen or drug; it loads live in 3D.</li>
+                    <li><b>Sites</b> — click a highlighted site (a binding domain, active site or bound drug) to colour it and read what it does.</li>
+                    <li><b>Display</b> — switch between cartoon, sticks, spheres and a molecular surface; spin to inspect.</li>
+                    <li><b>NAVADA AI Doc</b> — ask anything; it knows which structure and site you are viewing.</li>
+                </ul>
+            </div>
+            <div class="about-block">
+                <h4>How new structures are made</h4>
+                <p>New entries are produced by Claude Science: it predicts or fetches a structure (AlphaFold / ESMFold / the Protein Data Bank), models how a drug binds its target (DiffDock), grounds every description in the literature, and writes a NeuroAtlas-ready catalogue entry. The atlas then renders it here — no manual 3D modelling.</p>
+            </div>
+            <div class="about-block">
+                <h4>Data &amp; technology</h4>
+                <ul>
+                    <li><b>Structures</b> — RCSB Protein Data Bank, PubChem</li>
+                    <li><b>3D engine</b> — 3Dmol.js / WebGL</li>
+                    <li><b>Generation</b> — Claude Science (AlphaFold2, ESMFold, DiffDock, literature-review)</li>
+                    <li><b>NAVADA AI Doc</b> — NVIDIA NIM · Llama 3.3 70B</li>
+                </ul>
+                <p class="about-disclaimer">An educational and visualisation aid — not medical advice and not for diagnosis or treatment decisions.</p>
+            </div>
+            <div class="about-credit">
+                Designed &amp; developed by<br><b>Lee Akpareva, MBA, MA</b><br>
+                <span>PhD Researcher · Wearable Neurotechnology<br>Brunel University of London</span>
+            </div>
+        </div><!-- /about-view -->
+    </aside>
+
+    <section id="info" class="info-card"></section>
+
+    <footer id="credit">
+        <span class="credit-main">Designed &amp; developed by <strong>Lee Akpareva</strong>, MBA, MA</span>
+        <span class="credit-sub">PhD Researcher · Wearable Neurotechnology · Brunel University of London</span>
+    </footer>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading NAVADA MolecularAtlas…</p>
+    </div>
+
+    <div id="viewer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/3dmol@2.4.2/build/3Dmol-min.js"></script>
+    <script type="module" src="js/molecule.js?v=20260702-8"></script>
+    <script type="module" src="js/modules/AppChrome.js?v=20260702-4"></script>
+</body>
+</html>

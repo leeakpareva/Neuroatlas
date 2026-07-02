@@ -1,0 +1,26 @@
+{
+  "Kidney": {
+    "name": "Kidney",
+    "system": "Filtration",
+    "color": "#e0454a",
+    "function": "A pair of bean-shaped organs that filter your entire blood supply around 30 times a day, clearing waste and excess water to make urine. They also balance salts, control blood pressure and keep your body's chemistry steady."
+  },
+  "Renal pelvis": {
+    "name": "Renal Pelvis",
+    "system": "Drainage",
+    "color": "#38bccd",
+    "function": "The funnel-shaped collecting space inside each kidney where freshly made urine gathers. It channels the urine out of the kidney and down the ureter towards the bladder."
+  },
+  "Suprarenal gland": {
+    "name": "Suprarenal (Adrenal) Gland",
+    "system": "Endocrine",
+    "color": "#9d6bea",
+    "function": "A small hormone gland perched on top of each kidney. It releases adrenaline for the fight-or-flight response and cortisol and aldosterone to manage stress, salt balance and blood pressure."
+  },
+  "Urinary bladder": {
+    "name": "Urinary Bladder",
+    "system": "Drainage",
+    "color": "#f5a029",
+    "function": "A stretchy muscular pouch that stores urine delivered by the ureters until you are ready to go. When it empties, its wall squeezes to push urine out through the urethra."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "Cervical vertebrae": {
+    "name": "Cervical Vertebrae",
+    "system": "Neck",
+    "color": "#f5a029",
+    "function": "The seven small, agile bones of the neck (C1–C7). They carry the weight of the head and let it nod, turn and tilt. The top two, the atlas and axis, form a pivot that lets you shake your head 'no'."
+  },
+  "Thoracic vertebrae": {
+    "name": "Thoracic Vertebrae",
+    "system": "Chest",
+    "color": "#f472b6",
+    "function": "The twelve vertebrae of the upper and mid back (T1–T12). Each one anchors a pair of ribs, so together they build the back wall of the ribcage that shields the heart and lungs."
+  },
+  "Lumbar vertebrae": {
+    "name": "Lumbar Vertebrae",
+    "system": "Lower back",
+    "color": "#3f8be0",
+    "function": "The five largest, strongest vertebrae in the lower back (L1–L5). They bear most of the body's weight and allow you to bend forward, arch back and twist, which is why this region takes the greatest strain."
+  },
+  "Sacrum": {
+    "name": "Sacrum",
+    "system": "Pelvis",
+    "color": "#35d07f",
+    "function": "A single triangular bone made of five vertebrae fused together at the base of the spine. It wedges between the two hip bones to form the back of the pelvis and transfers the weight of the upper body into the legs."
+  },
+  "Coccyx": {
+    "name": "Coccyx (tailbone)",
+    "system": "Pelvis",
+    "color": "#9d6bea",
+    "function": "The tailbone — three to five tiny fused vertebrae at the very bottom of the spine. It is the remnant of a tail and serves as an anchor point for several pelvic muscles and ligaments, and helps support you when you sit."
+  },
+  "Intervertebral discs": {
+    "name": "Intervertebral Discs",
+    "system": "Cushions",
+    "color": "#f7d017",
+    "function": "Tough, gel-filled pads that sit between the vertebrae and act as shock absorbers. They cushion the bones from jolts, let the spine bend and twist, and space the vertebrae apart so the spinal nerves can pass through."
+  }
+}

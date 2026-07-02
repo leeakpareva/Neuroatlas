@@ -1,0 +1,32 @@
+{
+  "Thyroid cartilage": {
+    "name": "Thyroid Cartilage",
+    "system": "Laryngeal skeleton",
+    "color": "#f5a029",
+    "function": "The largest cartilage of the voice box, whose forward angle forms the Adam's apple you can feel at the front of the neck. It shields the delicate vocal folds behind it and anchors the muscles that tense them for higher pitch."
+  },
+  "Cricoid cartilage": {
+    "name": "Cricoid Cartilage",
+    "system": "Laryngeal skeleton",
+    "color": "#22c3b8",
+    "function": "A complete signet-ring of cartilage sitting just below the thyroid — the only full ring in the whole airway. It forms the strong base of the larynx, keeps the airway open and gives the moving cartilages above it something firm to pivot on."
+  },
+  "Arytenoid cartilage": {
+    "name": "Arytenoid Cartilages",
+    "system": "Vocal control",
+    "color": "#f472b6",
+    "function": "A pair of small pyramid-shaped cartilages perched on the cricoid ring. Each anchors the back end of a vocal fold, and as they rock and swivel they open the folds for breathing and draw them together to make sound."
+  },
+  "Corniculate cartilage": {
+    "name": "Corniculate Cartilages",
+    "system": "Vocal control",
+    "color": "#9d6bea",
+    "function": "Two tiny horn-shaped cartilages that cap the arytenoids. They stiffen the rim of the folds of tissue at the entrance to the larynx, helping shape the opening as the arytenoids move to control airflow and voice."
+  },
+  "Epiglottis": {
+    "name": "Epiglottis",
+    "system": "Airway protection",
+    "color": "#35d07f",
+    "function": "A leaf-shaped flap of springy cartilage at the top of the larynx. When you swallow it folds down like a lid over the airway, steering food and drink into the food pipe so nothing goes down the wrong way into the lungs."
+  }
+}

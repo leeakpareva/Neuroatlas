@@ -1,0 +1,37 @@
+/* NAVADA RenalAtlas — kidney theme.
+   Loads after style.css and re-tints the cyan brain palette to a renal crimson.
+   Most of the UI reads var(--accent); the rules below cover the spots that
+   hard-coded the cyan value. */
+
+body.kidney {
+    --accent: #e0454a;
+    --errp:   #f07a7e;
+    --bg:     #0c0606;
+}
+
+body.kidney #viewer-container {
+    background: radial-gradient(circle at 58% 40%, #1c1010 0%, #0c0606 70%);
+}
+
+body.kidney .nav-tab.active {
+    background: linear-gradient(135deg, rgba(224,69,74,.18), rgba(224,69,74,.03));
+}
+body.kidney .list-item.active {
+    background: rgba(224,69,74,.14);
+    box-shadow: inset 0 0 0 1px rgba(224,69,74,.42);
+}
+body.kidney .btn:hover {
+    box-shadow: 0 0 0 1px rgba(224,69,74,.25), 0 6px 18px -8px rgba(224,69,74,.5);
+}
+body.kidney .msg.user { background: rgba(224,69,74,.12); border-color: rgba(224,69,74,.3); }
+body.kidney .btn-send { background: linear-gradient(135deg, #f07a7e, #b32d32); color: #2a0808; }
+body.kidney .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(224,69,74,.8); }
+body.kidney #leader-line { filter: drop-shadow(0 0 4px rgba(224,69,74,.45)); }
+body.kidney #mobile-agent {
+    background: linear-gradient(135deg, #f07a7e, #b32d32); color: #2a0808;
+    box-shadow: 0 8px 22px -6px rgba(224,69,74,.7);
+}
+body.kidney #mobile-rotate.active {
+    background: linear-gradient(135deg, #f07a7e, #b32d32); color: #2a0808;
+    box-shadow: 0 8px 22px -6px rgba(224,69,74,.7);
+}

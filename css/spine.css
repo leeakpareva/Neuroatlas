@@ -1,0 +1,37 @@
+/* NAVADA SpineAtlas — spine theme.
+   Loads after style.css and re-tints the cyan brain palette to a spinal blue.
+   Most of the UI reads var(--accent); the rules below cover the spots that
+   hard-coded the cyan value. */
+
+body.spine {
+    --accent: #3f8be0;
+    --errp:   #6faaf0;
+    --bg:     #080a10;
+}
+
+body.spine #viewer-container {
+    background: radial-gradient(circle at 58% 40%, #101827 0%, #080a10 70%);
+}
+
+body.spine .nav-tab.active {
+    background: linear-gradient(135deg, rgba(63,139,224,.18), rgba(63,139,224,.03));
+}
+body.spine .list-item.active {
+    background: rgba(63,139,224,.14);
+    box-shadow: inset 0 0 0 1px rgba(63,139,224,.42);
+}
+body.spine .btn:hover {
+    box-shadow: 0 0 0 1px rgba(63,139,224,.25), 0 6px 18px -8px rgba(63,139,224,.5);
+}
+body.spine .msg.user { background: rgba(63,139,224,.12); border-color: rgba(63,139,224,.3); }
+body.spine .btn-send { background: linear-gradient(135deg, #6faaf0, #2f6fc0); color: #05080f; }
+body.spine .btn-send:hover { box-shadow: 0 6px 16px -6px rgba(63,139,224,.8); }
+body.spine #leader-line { filter: drop-shadow(0 0 4px rgba(63,139,224,.45)); }
+body.spine #mobile-agent {
+    background: linear-gradient(135deg, #6faaf0, #2f6fc0); color: #05080f;
+    box-shadow: 0 8px 22px -6px rgba(63,139,224,.7);
+}
+body.spine #mobile-rotate.active {
+    background: linear-gradient(135deg, #6faaf0, #2f6fc0); color: #05080f;
+    box-shadow: 0 8px 22px -6px rgba(63,139,224,.7);
+}

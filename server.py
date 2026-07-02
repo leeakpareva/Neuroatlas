@@ -23,7 +23,7 @@ def load_env():
                 k, v = line.split("=", 1)
                 ENV[k.strip()] = v.strip().strip('"').strip("'")
     # allow real environment to win if set
-    for k in ("ANTHROPIC_API_KEY", "NVIDIA_API_KEY", "NAVADA_TUTOR_MODEL"):
+    for k in ("ANTHROPIC_API_KEY", "NVIDIA_API_KEY", "NAVADA_TUTOR_MODEL", "XAI_API_KEY"):
         if os.environ.get(k):
             ENV[k] = os.environ[k]
 
@@ -100,6 +100,69 @@ def llm_chat(messages, context):
             "cycle, the conduction system, the ECG, and conditions like tachycardia, atrial fibrillation "
             "and myocardial infarction. Relate answers to what the user is currently looking at when relevant."
         )
+    elif organ == "skull":
+        sys_prompt = (
+            "You are the NAVADA SkullAtlas Tutor, a warm, expert anatomy teacher embedded in an "
+            "interactive 3D human-skull learning app (part of the NAVADA Atlas platform). Teach clearly "
+            "and concisely (2-5 short sentences unless asked for more). Use simple analogies. Be accurate; "
+            "if unsure, say so. Cover the bones of the skull — the braincase/neurocranium (frontal, parietal, "
+            "temporal, occipital, sphenoid, ethmoid), the facial skeleton (maxilla, zygomatic, nasal, "
+            "lacrimal, palatine, vomer, inferior nasal conchae), the mandible and teeth, and the hyoid bone "
+            "— plus sutures, fontanelles, the foramen magnum and which bones protect the brain or shape the "
+            "face. Relate answers to the bone the user is currently looking at when relevant."
+        )
+    elif organ == "kidney":
+        sys_prompt = (
+            "You are the NAVADA RenalAtlas Tutor, a warm, expert nephrology/urology teacher embedded in an "
+            "interactive 3D app of the kidney and urinary system (part of the NAVADA Atlas platform). Teach "
+            "clearly and concisely (2-5 short sentences unless asked for more). Use simple analogies. Be "
+            "accurate; if unsure, say so. Cover the kidney (cortex, nephrons, filtration), the renal pelvis, "
+            "the ureters and urinary bladder, the suprarenal (adrenal) glands, how the kidneys filter blood, "
+            "balance water and salt, control blood pressure, and conditions like dehydration, kidney stones "
+            "and chronic kidney disease. Relate answers to what the user is currently looking at when relevant."
+        )
+    elif organ == "larynx":
+        sys_prompt = (
+            "You are the NAVADA LarynxAtlas Tutor, a warm, expert laryngology/voice teacher embedded in an "
+            "interactive 3D app of the larynx (voice box) (part of the NAVADA Atlas platform). Teach clearly "
+            "and concisely (2-5 short sentences unless asked for more). Use simple analogies. Be accurate; if "
+            "unsure, say so. Cover the laryngeal cartilages (thyroid, cricoid, arytenoid, corniculate), the "
+            "epiglottis, how the vocal folds vibrate to make sound, pitch and volume, how the epiglottis "
+            "protects the airway when swallowing, and voice care. Relate answers to what the user is currently "
+            "looking at when relevant."
+        )
+    elif organ == "spine":
+        sys_prompt = (
+            "You are the NAVADA SpineAtlas Tutor, a warm, expert spine/musculoskeletal teacher embedded in an "
+            "interactive 3D app of the vertebral column (part of the NAVADA Atlas platform). Teach clearly and "
+            "concisely (2-5 short sentences unless asked for more). Use simple analogies. Be accurate; if unsure, "
+            "say so. Cover the regions of the spine (cervical, thoracic, lumbar, sacrum, coccyx), the "
+            "intervertebral discs that cushion between vertebrae, how the spine protects the spinal cord, "
+            "posture and movement, and common issues like disc herniation and back pain. Relate answers to what "
+            "the user is currently looking at when relevant."
+        )
+    elif organ == "knee":
+        sys_prompt = (
+            "You are the NAVADA KneeAtlas Tutor, a warm, expert orthopaedics/sports-medicine teacher embedded in "
+            "an interactive 3D app of the knee joint (part of the NAVADA Atlas platform). Teach clearly and "
+            "concisely (2-5 short sentences unless asked for more). Use simple analogies. Be accurate; if unsure, "
+            "say so. Cover the bones (femur, tibia, fibula, patella), the cruciate ligaments (ACL and PCL) and "
+            "how they stabilise the knee, the menisci that cushion the joint, how the knee bends and bears load, "
+            "and common injuries like ACL tears and meniscus damage. Relate answers to what the user is currently "
+            "looking at when relevant."
+        )
+    elif organ == "molecular":
+        sys_prompt = (
+            "You are the NAVADA MolecularAtlas Tutor, a warm, expert structural-biology, virology and "
+            "pharmacology teacher embedded in an interactive 3D molecular viewer (part of the NAVADA Atlas "
+            "platform). The user is looking at real 3D structures of proteins, pathogens (viral proteins) and "
+            "drug molecules loaded from the Protein Data Bank and PubChem. Teach clearly and concisely (2-5 "
+            "short sentences unless asked for more). Use simple analogies. Be accurate; if unsure, say so. "
+            "Cover protein structure (chains, domains, active sites, secondary structure), how pathogens such "
+            "as viruses use their proteins to infect cells, how drugs bind their targets to treat disease, and "
+            "what a highlighted residue or binding site does. Relate answers to the structure and site the user "
+            "is currently looking at when relevant."
+        )
     else:
         sys_prompt = (
             "You are the NAVADA NeuroAtlas Tutor, a warm, expert neuroscience teacher embedded in an "
@@ -156,6 +219,28 @@ def llm_chat(messages, context):
         return {"error": "exception", "reply": f"AI request failed: {e}"}
 
 
+def tts_audio(text, voice=None):
+    """Grok (xAI) text-to-speech. Returns (mp3_bytes, error). Key stays server-side."""
+    key = ENV.get("XAI_API_KEY")
+    if not key:
+        return None, "no_xai_key"
+    payload = {"text": (text or "")[:800], "language": "en"}
+    if voice:
+        payload["voice"] = voice
+    body = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.x.ai/v1/tts", data=body,
+        headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"},
+        method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return r.read(), None
+    except urllib.error.HTTPError as e:
+        return None, f"http_{e.code}: {e.read().decode('utf-8','ignore')[:160]}"
+    except Exception as e:
+        return None, str(e)
+
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     # HTTP/1.1 keeps the TCP connection alive so the many small assets on a page
     # reuse one connection instead of opening a fresh one each time.
@@ -187,7 +272,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/api/health":
-            return self._json({"ai": has_key(), "model": default_model()})
+            return self._json({"ai": has_key(), "model": default_model(),
+                               "voice": bool(ENV.get("XAI_API_KEY"))})
         return super().do_GET()
 
     def do_POST(self):
@@ -198,6 +284,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 msgs = payload.get("messages", [])
                 ctx = payload.get("context", {})
                 return self._json(llm_chat(msgs, ctx))
+            except Exception as e:
+                return self._json({"error": "bad_request", "reply": str(e)}, 400)
+        if self.path == "/api/tts":
+            try:
+                length = int(self.headers.get("Content-Length", 0))
+                payload = json.loads(self.rfile.read(length) or b"{}")
+                audio, err = tts_audio(payload.get("text", ""), payload.get("voice"))
+                if audio is None:
+                    return self._json({"error": err or "tts_failed"}, 502)
+                self.send_response(200)
+                self.send_header("Content-Type", "audio/mpeg")
+                self.send_header("Content-Length", str(len(audio)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(audio)
+                return
             except Exception as e:
                 return self._json({"error": "bad_request", "reply": str(e)}, 400)
         self.send_error(404)

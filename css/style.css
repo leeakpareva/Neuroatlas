@@ -49,7 +49,15 @@ canvas { display: block; }
 .organ-switch a.active { color: #fff; border-color: var(--accent);
     background: linear-gradient(135deg, rgba(53,224,255,.18), rgba(53,224,255,.03)); }
 body.heart .organ-switch a.active { background: linear-gradient(135deg, rgba(255,90,110,.18), rgba(255,90,110,.03)); }
-@media (max-width: 760px) { .organ-switch a { padding: 4px 8px; font-size: 10px; } }
+@media (max-width: 760px) {
+    /* 9 organ tabs overflow the width — make the row swipe-scrollable so every
+       tab (incl. the current page's own) is reachable */
+    .brand-wrap { max-width: 100vw; }
+    .organ-switch { flex-wrap: nowrap; overflow-x: auto; max-width: calc(100vw - 32px);
+        scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding: 0 12px; }
+    .organ-switch::-webkit-scrollbar { display: none; }
+    .organ-switch a { flex: 0 0 auto; padding: 4px 8px; font-size: 10px; }
+}
 
 /* ---- left panel ---- */
 #panel {
@@ -265,6 +273,8 @@ body.heart .organ-switch a.active { background: linear-gradient(135deg, rgba(255
 
     /* --- clean, chart-led controls: less text, tap the brain to learn --- */
     #sec-regions, #sec-explore { display: none; }   /* tap parts; explode lives on the edge */
+    /* molecules: sites are the interaction (not a tappable mesh) — keep them in the panel */
+    body.molecular #sec-regions { display: block; }
     #scn-desc, .p-foot { display: none; }            /* drop long copy */
     #sec-tutor { display: none; }                    /* agent is NOT in the controls panel... */
     #panel.chat-only #sec-tutor { display: block; }  /* ...it only opens via the AI icon */
@@ -357,3 +367,117 @@ body.heart .organ-switch a.active { background: linear-gradient(135deg, rgba(255
     #panel { max-height: 92vh; }
     .info-card { right: auto; width: 300px; }
 }
+
+/* ---- mobile parts rail: swipe through each 3D part ---- */
+.parts-rail { display: none; }   /* desktop uses the panel list; rail is mobile-only */
+
+@media (max-width: 760px) {
+    .parts-rail {
+        display: block;                              /* override the desktop `display:none` */
+        position: fixed; left: 0; right: 0; z-index: 23;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        pointer-events: none;
+    }
+    /* while a panel / chat sheet is up, get out of the way */
+    body.panel-open .parts-rail { display: none; }
+
+    /* steppers float over the rail edges so they're always reachable and can
+       never be pushed off-screen by the scrolling track */
+    .pr-step {
+        pointer-events: auto; position: absolute; top: 50%; transform: translateY(-50%);
+        width: 34px; height: 44px; z-index: 2;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(9,12,18,.82); border: 1px solid var(--panel-bd);
+        border-radius: 12px; color: var(--ink); font-size: 22px; line-height: 1;
+        font-family: var(--sans); cursor: pointer;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .pr-prev { left: 8px; }
+    .pr-next { right: 8px; }
+    .pr-step:active { border-color: var(--accent); color: #fff; }
+
+    .pr-track {
+        pointer-events: auto; display: flex; gap: 7px; width: 100%;
+        overflow-x: auto; padding: 6px 42%;          /* end room so first/last chip can centre under the steppers */
+        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; touch-action: pan-x;
+    }
+    .pr-track::-webkit-scrollbar { display: none; }
+
+    .pr-chip {
+        scroll-snap-align: center; flex: 0 0 auto; display: flex; align-items: center; gap: 7px;
+        height: 40px; padding: 0 14px; border-radius: 999px; white-space: nowrap; cursor: pointer;
+        background: rgba(14,17,23,.72); border: 1px solid var(--panel-bd);
+        color: var(--ink-dim); font-size: 12.5px; font-family: var(--sans);
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+    .pr-chip .pr-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto;
+        box-shadow: 0 0 6px rgba(255,255,255,.18); }
+    .pr-chip.active {
+        color: #fff; border-color: var(--accent); transform: translateY(-2px) scale(1.05);
+        background: linear-gradient(135deg, rgba(53,224,255,.22), rgba(53,224,255,.04));
+        box-shadow: 0 8px 20px -8px rgba(53,224,255,.6);
+    }
+    /* per-organ accent on the active chip (matches each page's theme) */
+    body.heart .pr-chip.active { border-color: #ff5a6e;
+        background: linear-gradient(135deg, rgba(255,90,110,.22), rgba(255,90,110,.04));
+        box-shadow: 0 8px 20px -8px rgba(255,90,110,.6); }
+
+    /* lift the floating controls above the rail so nothing overlaps */
+    #mobile-agent, #mobile-rotate { bottom: calc(76px + env(safe-area-inset-bottom)); }
+    #reopen { bottom: calc(80px + env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 760px) and (orientation: landscape) {
+    /* rail eats vertical space; keep steppers usable but slimmer */
+    .pr-track { padding: 4px 42%; }
+    .pr-chip, .pr-step { height: 36px; }
+}
+
+/* ---- splash cover: "NEUROATLAS" fades into the app (once per session) ---- */
+#splash {
+    position: fixed; inset: 0; z-index: 120;
+    display: flex; align-items: center; justify-content: center;
+    background: #05060a; opacity: 1; transition: opacity .8s ease;
+}
+#splash.hide { opacity: 0; pointer-events: none; }
+.splash-word {
+    font-family: var(--mono); font-weight: 700; letter-spacing: 14px;
+    font-size: clamp(22px, 7vw, 52px); color: #fff; padding-left: 14px;
+    opacity: 0; transform: translateY(8px) scale(.98);
+    transition: opacity .9s ease, transform .9s ease;
+    text-shadow: 0 0 34px rgba(53,224,255,.45);
+}
+#splash.in .splash-word { opacity: 1; transform: none; }
+
+/* ---- guided tour (button in panel + floating stop pill) ---- */
+.tour-btn.touring { border-color: #ff6b6b; color: #fff;
+    box-shadow: 0 0 0 1px rgba(255,107,107,.4), 0 6px 18px -8px rgba(255,107,107,.6); }
+.tour-hint { font-family: var(--mono); font-size: 9.5px; line-height: 1.55; color: var(--ink-dim); margin-top: 7px; }
+.tour-stop {
+    position: fixed; top: calc(14px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+    z-index: 60; display: none; padding: 10px 20px; border-radius: 999px; cursor: pointer; border: none;
+    background: linear-gradient(135deg, #ff5a5a, #e03131); color: #fff; font: 700 13px var(--sans);
+    box-shadow: 0 8px 26px -6px rgba(224,49,49,.75);
+}
+.tour-stop.show { display: block; }
+
+/* ---- background swatches (in the controls panel) ---- */
+.bg-swatches { display: flex; gap: 10px; }
+.bg-swatch {
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    border: 2px solid var(--panel-bd); padding: 0; transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.bg-swatch:hover { transform: translateY(-2px); border-color: var(--ink-dim); }
+.bg-swatch.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(53,224,255,.35), 0 6px 16px -6px rgba(53,224,255,.6); }
+
+/* ---- keep the dark glass UI readable when the backdrop is light ---- */
+body.bg-light .info-card,
+body.bg-light #panel { background: rgba(9, 12, 18, 0.9); }
+body.bg-light .organ-switch a,
+body.bg-light .pr-chip,
+body.bg-light .pr-step,
+body.bg-light #reopen { background: rgba(9, 12, 18, 0.86); }
+body.bg-light #topbar { background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,0)); }
+body.bg-light #tooltip { background: rgba(9,12,18,.95); }
