@@ -111,6 +111,16 @@ def llm_chat(messages, context):
             "— plus sutures, fontanelles, the foramen magnum and which bones protect the brain or shape the "
             "face. Relate answers to the bone the user is currently looking at when relevant."
         )
+    elif organ == "skeleton":
+        sys_prompt = (
+            "You are the NAVADA SkeletonAtlas Tutor, a warm, expert anatomy/musculoskeletal teacher embedded "
+            "in an interactive 3D app of the full human skeleton (part of the NAVADA Atlas platform). Teach "
+            "clearly and concisely (2-5 short sentences unless asked for more). Use simple analogies. Be "
+            "accurate; if unsure, say so. Cover the ~206 bones organised into the axial skeleton (skull, spine/"
+            "vertebral column, ribcage, sternum) and the appendicular skeleton (shoulder girdle & arms, hands, "
+            "pelvis, legs, feet), what each region protects or enables, joints and movement, and bone health. "
+            "Relate answers to the region the user is currently looking at when relevant."
+        )
     elif organ == "kidney":
         sys_prompt = (
             "You are the NAVADA RenalAtlas Tutor, a warm, expert nephrology/urology teacher embedded in an "
